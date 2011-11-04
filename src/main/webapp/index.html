@@ -1,0 +1,157 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="avriGeo - Find your connections around the world">
+	<title>avriGeo</title>
+	<link href="./resources/styles/default.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="./resources/js/mootools.js"></script>
+	<script type="text/javascript" src="./resources/js/mootools-more-1.4.0.1.js"></script>
+	
+	<script type="text/javascript" src="./resources/js/third-party/tween.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/three/ThreeWebGL.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/three/ThreeExtras.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/three/RequestAnimationFrame.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/three/Detector.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/Stats.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/optimer_regular.typeface.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/tiny_alert.js"></script>
+
+	<script type="text/javascript" src="./resources/js/viadeo.js"></script>
+	<script type="text/javascript" src="./resources/js/avritravel.js"></script>
+	<script type="text/javascript" src="./resources/js/user.js"></script>
+	<script type="text/javascript" src="./resources/js/stars.js"></script>
+	<script type="text/javascript" src="./resources/js/globe.js"></script>
+	<script type="text/javascript" src="./resources/js/geoUtils.js"></script>
+	<script type="text/javascript" src="./resources/js/city.js"></script>
+	<script type="text/javascript" src="./resources/js/utils.js"></script>
+	<script type="text/javascript" src="./resources/js/social.js"></script>
+
+</head>
+
+<body>
+	<div id="container"></div>
+
+<header id="header" style="opacity:0"> 
+	<form id="inputSearch">
+		<input type="text" id="inputName" title="Firstname/Lastname" class="field"/> 
+		<input type="text"  id="inputCompany" title="Company" class="field"/> 
+		<!--<input type="text" id="inputJob" title="Job" class="field"/>--> 
+		<input type="submit" id="search" value="GeoSearch" class="searchButton callToaction"/>
+		<div id="loader" style="color: #ececec"><img style="float:left" src="./resources/images/loader.gif"/><div style="margin: 2px 0px 0px 3px; width: 200px">Geocoding in progress.<br/> please wait...</div></div>
+	</form>
+</header> 
+<!-- 
+<div id="connect"> 
+	<h1>geoViadeo</h1> 
+	<p> Explore the world, show your connections and discover new ones...<br />
+	AvriGeo provides an efficient way to visualize and understand your social networks.<br />
+	Play with the planet and discover how your own web is woven.</p> 
+	<div style="float:right;padding:10px;padding-right:30px;">
+		<input id="start3d" type="submit" value="Start3D" class="Start3D callToaction"/><br /> 
+		(Requires a Viadeo account)
+	</div>
+	<br />
+	<div style="margin-top: 50px">
+	<p>AvriGeo 3D requires a recent browser with OpenGL enabled. <a href="http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" target="_blank">?</a></p>
+	</div>
+	<div id="video" style="text-align: center; margin-top: 10px">
+	</div>
+</div>
+ --> 
+  <script type="text/javascript">
+  if(!Detector.webgl){
+	      $$("body").setStyle("background", "url(./resources/images/fond.jpg) center center no-repeat, url(./resources/images/stars.jpg) ");
+	      $('connect').setStyle('height', 520);
+	      $('start3d').setAttribute("value","3D not avaible");
+	      $('start3d').addEvent("submit", function () {return false;});
+	      $('video').set('html', '<strong>Sorry, your browser doesn\'t support WebGL. A 2D version is planned. Meanwhile, you can watch AvriGeo in action :</strong><br /> <iframe width="300" height="182" src="http://www.youtube.com/embed/g0i80Mwob2U" frameborder="0" allowfullscreen></iframe>');
+  }
+
+  window.addEventListener('resize', function () {
+  	$('footer').setStyle('bottom', 0);
+  	$('hackFb').setStyle('bottom', 4);
+  }, false);
+   window.addEvent('domready', function() {
+	    if(Detector.webgl){
+	    	var geoTravel = new GeoTravel('container');
+	    	GB.geoTravel = geoTravel;
+	    	geoTravel.start();
+	    }
+    });
+   
+    $$('.field').each(function (el) {
+    	el.set('value', el.get('title'));
+    	el.addEvent('click', function () {
+    		if(el.get('value') == el.get('title')) {
+    			el.set('value', '');
+    		}
+    	});
+    });
+    
+    window.setTimeout(function() {
+	    $('footerEl').fade(0.6);
+	}, 5000);
+    
+  </script>
+  <div id="infoSearch"></div>
+  <div id="rightPanel">
+  <div id="hideRightPanel">&nbsp;</div>
+  <div id="social">
+  	<span>Exploring <span id="meName"></span>'s connections.</span>
+    <h2 id="cityName"> </h2>
+    <span id="lat"> </span>
+    <span id="lon"> </span>
+    <span id="contactNumber"> </span>
+        <ul id="contactList">
+        </ul>
+    </div>
+    </div>
+<!--
+<footer id="footerEl" >
+	<div id="footer">
+		<a href="http://serv.avricot.com">AvriGeo</a>, WebGL & server by <a href="http://www.avricot.com" target="_blank">Quentin Ambard</a> & <a href="http://www.viadeo.com/profile/002ud7dupkmtum0?language=fr&nav=0&navContext=002uk5ji3mpgy1n" target="_blank">Matthieu Mouminoux</a>, Html/Css by <a href="http://www.viadeo.com/profile/00221fmbgp0u9u4b&amp;language=fr?ga_from=Fu:%2Fprofil%2Fdisplay%2Findex.jsp;Fb%3Amininews%3BFe%3AMN-name-L2%3BMNType%3A8%3B" target="_blank">Vincent Hue</a> | <a href="http://www.avricot.com" target="_blank">www.avricot.com</a> | <a href="http://www.avricot.com/blog/index.php?contact&idMenu=avriMenu5" target="_blank">contact</a>
+		&nbsp;&nbsp;&nbsp;<g:plusone size="medium"></g:plusone>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-text="Whooa ! Social 3D connections visualization using WebGL #AvriGeo" data-count="horizontal" data-via="avricot">Tweet</a>
+	</div>
+	<div id="hackFb">
+		<div style="margin-bottom:10px" class="fb-like" data-href="serv.avricot.com" data-send="true" data-layout="button_count" data-width="50" data-show-faces="true" data-colorscheme="dark"></div></div>
+	</div>
+</footer>
+
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/plusone.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+<script type="text/javascript" src="//platform.twitter.com/widgets.js"></script>
+<div id="fb-root">
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-26409211-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  -->
+
+</body> 
+</html>	
+	
