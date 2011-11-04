@@ -209,93 +209,66 @@ input.field {
 	height: 35px;
 	float: right;
 }
-#rightPanel {
-	background: url("../images/decoConnect.png") no-repeat scroll right bottom, url("../images/connectionBackground.png") repeat scroll 0 0 transparent;
-    border-radius: 5px 0px 0px 5px;
-    box-shadow: 0 0 10px #CDCBCB;
-    height: 60%;
-    margin-top: 50px;
-    padding: 10px 0 10px 0px;
-    position: fixed;
-    right: 0;
-    display: none;
-    top: 60px;
-}
-#hideRightPanel {
-    float: left;
-    width: 15px;
-    height: 100%;
-    background: url("../images/collapse_button.png") no-repeat left center;
-    cursor: pointer;
-}
-#social {
-    margin-left: 20px;
-    height: 100%;
-}
-#social h2 {
-    font-size: 24px;
-}
-#social span {
-    display: block;
-}
-#social ul {
-    height: 85%;
-    width: 352px;
-    overflow: auto;
-}
-#social li {
-    background-color: white;
-    border: 1px solid lightgray;
-    height: 60px;
-    overflow: hidden;
-    width: 330px;
-    cursor: pointer;
-}
-#social li:hover{
-    background-color: #DDFFDD;
-}
-#social .active{
-	background-color: #BBFFBB;
-	cursor: default;
-}
-#social li img {
-    float: left;
-}
-.contact {
-    float: left;
-    font-family: tahoma;
-    margin-top: 8px;
-}
-.contact span {
-    width: 205px;
-}
-.name {
-    font-size: 16px;
-}
 .title {
     color: #818181;
     font-size: 12px;
 }
-.contactPicto {
-    background: url("../images/viadeoPicto.png") no-repeat scroll 0 0 transparent;
-    float: left;
-    height: 35px;
-    width: 40px;
-    margin-top: 10px;
-    padding-left: 38px;
-    cursor: pointer;
+
+
+
+#timeLineContainer {
+	width: 100%;
+	height: 100px;
+	bottom: 30px;
+	position: absolute;
+	text-align: center;
 }
-.contactNumber {
-    float: left;
-    line-height: 30px;
+#timeLine {
+	width: 800px;
+	margin: auto;
+}
+#timeLineBar {
+	background-color: #5c4d4d ;
+	height: 20px;
+	border-radius: 10px; 
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px; 
+	border: 1px solid #540000;
 }
 
-#meName {
-	display: inline !important;
-	}
-#lat {
-	float:left; 
-	width:150px;
+.albumContainer {
+	position: absolute;
+	height: 20px;
+}
+.album {
+	-webkit-transform: rotate(-40deg); 
+	-moz-transform: rotate(-40deg);
+	width: 100px;
+	overflow: hidden;
+	position: relative;
+	top: -130px;
+	left: 0px;
+	border-bottom: 1px solid #540000;
+	text-align: left;
+}
+.albumV {
+	width: 10px;
+	height: 20px;
+	left: 5px;
+	top: -60px;	
+	position: relative;
+	border-right: 1px solid #540000;
+}
+.albumPoint {
+	top: -30px;	
+	left: 10px;
+	position: relative;
+	width: 10px;
+	height: 10px;
+	background-color: #540000;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
 
 	#tinyalert{
