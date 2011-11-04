@@ -85,20 +85,4 @@
 	<!-- Message source for this context, loaded from localized "messages_xx" files.	-->
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
 			p:basename="messages"/>
-
-
-<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-  <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
-</bean>
-
-<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-  <property name="cache" value="true"/>
-  <property name="prefix" value=""/>
-  <property name="suffix" value=".ftl"/>
-  
-  <!-- if you want to use the Spring FreeMarker macros, set this property to true -->
-  <property name="exposeSpringMacroHelpers" value="true"/>
-
-</bean>
-
 </beans>
