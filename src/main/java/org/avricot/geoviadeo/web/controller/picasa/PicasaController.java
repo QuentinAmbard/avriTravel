@@ -2,6 +2,7 @@ package org.avricot.geoviadeo.web.controller.picasa;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.avricot.geoviadeo.web.controller.picasa.domain.Album;
@@ -46,7 +47,6 @@ public class PicasaController {
 				album = new Album();
 				album.setTitle(myAlbum.getTitle().getPlainText());
 				album.setDescription(myAlbum.getDescription().getPlainText());
-				album.setPhotosNumber(myAlbum.getPhotosUsed());
 
 				URL feedUrlPhoto = new URL(myAlbum.getId().replace("entry",
 						"feed/api"));
@@ -54,34 +54,47 @@ public class PicasaController {
 						AlbumFeed.class);
 				List<Photo> photoList = new ArrayList<Photo>();
 				Photo photo;
+				Date firstPhoto = null;
+				Date lastPhoto = null;
 				for (PhotoEntry photoEntry : albumFeed.getPhotoEntries()) {
-					photo = new Photo();
 					if (photoEntry.getGeoLocation() != null) {
+						photo = new Photo();
 						photo.setLatlng(new LatLng(photoEntry.getGeoLocation()
 								.getLatitude(), photoEntry.getGeoLocation()
 								.getLongitude()));
-					}
-					photo.setHeight(photoEntry.getHeight());
-					photo.setWidth(photoEntry.getWidth());
-					photo.setTimestamp(photoEntry.getTimestamp().getTime());
-					try {
-						photo.setThumbnailLink(photoEntry.getMediaThumbnails()
-								.get(0).getUrl());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					try {
-						photo.setNormalLink(photoEntry.getMediaContents()
-								.get(0).getUrl());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					photoList.add(photo);
+						photo.setHeight(photoEntry.getHeight());
+						photo.setWidth(photoEntry.getWidth());
+						photo.setTimestamp(photoEntry.getTimestamp().getTime());
+						if (firstPhoto == null) {
+							firstPhoto = photoEntry.getTimestamp();
+						} else {
+							if (photoEntry.getTimestamp().before(firstPhoto)) {
+								firstPhoto = photoEntry.getTimestamp();
+							}
+						}
+						if (lastPhoto == null) {
+							lastPhoto = photoEntry.getTimestamp();
+						} else {
+							if (photoEntry.getTimestamp().after(lastPhoto)) {
+								lastPhoto = photoEntry.getTimestamp();
+							}
+						}
+						setPhotoThumbnail(photo, photoEntry);
+						setPhotoNormalPicture(photo, photoEntry);
+						photo.setId(Long.valueOf(photo.getNormalLink()
+								.hashCode()));
+						photoList.add(photo);
 
+					}
 				}
-				album.setPhotos(photoList);
-
-				albumList.add(album);
+				if (photoList.size() != 0) {
+					album.setPhotosNumber(photoList.size());
+					album.setPhotos(photoList);
+					album.setStartDate(firstPhoto.getTime());
+					album.setEndDate(lastPhoto.getTime());
+					album.setId(firstPhoto.getTime() + lastPhoto.getTime());
+					albumList.add(album);
+				}
 			}
 			return albumList;
 		} catch (Exception e) {
@@ -89,4 +102,22 @@ public class PicasaController {
 		}
 		return null;
 	}
+
+	private void setPhotoNormalPicture(Photo photo, PhotoEntry photoEntry) {
+		try {
+			photo.setNormalLink(photoEntry.getMediaContents().get(0).getUrl());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void setPhotoThumbnail(Photo photo, PhotoEntry photoEntry) {
+		try {
+			photo.setThumbnailLink(photoEntry.getMediaThumbnails().get(0)
+					.getUrl());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

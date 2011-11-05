@@ -2,6 +2,7 @@ package org.avricot.geoviadeo.web.controller.picasa.domain;
 
 public class Photo {
 
+	private Long id;
 	private LatLng latlng;
 	private Long height;
 	private Long width;
@@ -55,6 +56,14 @@ public class Photo {
 
 	public void setLatlng(LatLng latlng) {
 		this.latlng = latlng;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }
