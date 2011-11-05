@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gdata.client.http.AuthSubUtil;
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.data.photos.AlbumFeed;
@@ -102,18 +101,6 @@ public class PicasaController {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	private void connectUserIfNoToken() {
-		String nextUrl = "http://localhost:8080/avriTravel/server/redirect/";
-		String scope = "https://picasaweb.google.com/data/";
-		boolean secure = false; // set secure=true to request secure AuthSub
-								// tokens
-		boolean session = true;
-		String authSubUrl = AuthSubUtil.getRequestUrl(nextUrl, scope, secure,
-				session);
-		System.out.println(authSubUrl);
-
 	}
 
 	private void setPhotoNormalPicture(Photo photo, PhotoEntry photoEntry) {
