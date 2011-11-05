@@ -107,16 +107,11 @@
 // 	      $('video').set('html', '<strong>Sorry, your browser doesn\'t support WebGL. A 2D version is planned. Meanwhile, you can watch AvriGeo in action :</strong><br /> <iframe width="300" height="182" src="http://www.youtube.com/embed/g0i80Mwob2U" frameborder="0" allowfullscreen></iframe>');
   } 
 
-  window.addEventListener('resize', function () {
-  	$('footer').setStyle('bottom', 0);
-  	$('hackFb').setStyle('bottom', 4);
-  }, false);
-
    window.addEvent('domready', function() {
 	    if(Detector.webgl){
-// 	    	var geoTravel = new GeoTravel('container');
-// 	    	GB.geoTravel = geoTravel;
-// 	    	geoTravel.start();
+ 	    	var geoTravel = new GeoTravel('container');
+ 	    	GB.geoTravel = geoTravel;
+ 	    	geoTravel.start();
 	    	
 	    	$('start3d').addEvent('click', function () {
 	    		var jsonRequest = new Request.JSON({url: './server/redirect/test', 
