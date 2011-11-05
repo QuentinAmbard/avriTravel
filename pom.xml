@@ -17,21 +17,98 @@
 		<jodatime.version>1.5.2</jodatime.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<powermock.version>1.4.8</powermock.version>
+		<gdata.home>/home/julien/Téléchargements/gdata/java/lib</gdata.home>
+		<gdata.deps>/home/julien/Téléchargements/gdata/java/deps</gdata.deps>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-base</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.home}/gdata-base-1.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-client</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.home}/gdata-client-1.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-client-meta</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.home}/gdata-client-meta-1.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-core</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.home}/gdata-core-1.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-photos</artifactId>
+			<version>2.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.home}/gdata-photos-2.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-photos-meta</artifactId>
+			<version>2.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.home}/gdata-photos-meta-2.0.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>google-collect</artifactId>
+			<version>1.0-rc1</version>
+			<scope>system</scope>
+			<systemPath>${gdata.deps}/google-collect-1.0-rc1.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>jsr305</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.deps}/jsr305.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>gdata-media</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${gdata.home}/gdata-media-1.0.jar</systemPath>
+		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>2.3.17</version>
 		</dependency>
-
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>javax.mail-api</artifactId>
+			<version>1.4.4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 			<version>1.0.0.Final</version>
 		</dependency>
-		
+
 		<!-- Validation -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -199,9 +276,9 @@
 
 		<!-- Spring social -->
 		<dependency>
-		    <groupId>javax.inject</groupId>
-		    <artifactId>javax.inject</artifactId>
-		    <version>1</version>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
 		</dependency>
 
 		<dependency>
@@ -209,20 +286,15 @@
 			<artifactId>geocoder-java</artifactId>
 			<version>0.7</version>
 		</dependency>
-	    <dependency>
-	        <groupId>org.apache.httpcomponents</groupId>
-	        <artifactId>httpcomponents-client</artifactId>
-	        <version>4.1.2</version>
-	        <type>pom</type>
-	    </dependency>
-	    
-<!-- 	    <dependency>
-	        <groupId>org.apache.httpcomponents</groupId>
-	        <artifactId>httpcomponents-core</artifactId>
-	        <version>4.1.1</version>
-	        <type>pom</type>
-	    </dependency>
- -->	    
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcomponents-client</artifactId>
+			<version>4.1.2</version>
+			<type>pom</type>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.apache.httpcomponents</groupId> <artifactId>httpcomponents-core</artifactId> 
+			<version>4.1.1</version> <type>pom</type> </dependency> -->
 	</dependencies>
 	<build>
 		<finalName>kadeal</finalName>
