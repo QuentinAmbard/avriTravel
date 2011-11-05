@@ -19,7 +19,7 @@
 		$(lowerId).setStyle("height", "0px");
 		$(lowerId).setStyle("visibility", "visible");
 		
-		var flipUpper = new Fx.Tween(upperId, {duration: 200, transition: Fx.Transitions.Sine.easeInOut});
+		/*var flipUpper = new Fx.Tween(upperId, {duration: 200, transition: Fx.Transitions.Sine.easeInOut});
 		flipUpper.addEvents({
 			'complete': function(){
 				var flipLower = new Fx.Tween(lowerId, {duration: 200, transition: Fx.Transitions.Sine.easeInOut});
@@ -34,21 +34,21 @@
 					
 			}
 							});
-		flipUpper.start('height', 0);
-		
+		flipUpper.start('height', 0);*/
+		lowerBackId = lowerId+"Back";
+		$(lowerBackId).src = $(lowerId).src;
+		$(lowerId).setStyle("visibility", "hidden");
+		$(upperId).setStyle("visibility", "hidden");
 		
 	}//flip
 				
 	
-	function retroClock(){
-		
-		// get new time
-		 now = new Date();
-		 h = now.getSeconds() % 12+1;
-		 m1 = now.getSeconds() % 6;
-		 m2 = now.getSeconds() % 6;
-		 s1 = now.getSeconds() % 6;
-		 s2 = now.getSeconds() % 6;
+	function retroClock(m,d,y){
+		 h = m;
+		 m1 = d / 10;
+		 m2 = d % 10;
+		 s1 = (y / 10) % 10;
+		 s2 = y % 10;
 		 
 		 
 		 ap = "PM";
@@ -82,6 +82,13 @@
 		
 	}
 	
-	setInterval('retroClock()', 1000);
+	function setClock(date) {
+		var date = new Date(Math.floor(date/1000));
+		retroClock(date.getMonth()+1, date.getDay()-1, date.getFullYear());
+	}
+	
+//	setTimeout(function(){
+//	setClock(1320532857  * 1000 *1000);
+//	}, 1000);
 			
 	
