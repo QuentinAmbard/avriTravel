@@ -3,24 +3,18 @@ var Album = new Class({
 	options: {
 		deltaTopHover: 20
 	},
-	name: "",
-	pictures: [],
 	picturesDom: [],
-	startDate: 1315169892,
-	endDate: 1320443892,
 	left: 0,
 	color:"",
-	id: "",
-	initialize: function(obj, id, name, pictures, color, options){
-		this.obj = obj;
-		this.id = id;
-		this.name =name ;
-		this.pictures = pictures;
+	initialize: function(obj, color, options){
+		for(var i in obj) {
+			this[i] = obj[i];
+		}
 		this.color = color;
-		this.text = new Element('div', {'class': 'album', html: name, styles: {"border-bottom-color": color}});
+		this.text = new Element('div', {'class': 'album', html: this.title, styles: {"border-bottom-color": color}});
 		this.vBar = new Element('div', {'class': 'albumV', styles: {"border-right-color": color}});
 		this.point = new Element('div', {'class': 'albumPoint', styles: {"background-color": color}});
-		picture = pictures[0];
+		picture = this.pictures[0];
 		this.picture = new Element('img', {'class': 'albumImg', width: "52px",  height: "38px", src: picture.thumbnailLink});
 		this.dom = new Element('div', {'class': 'albumContainer', styles: {"background-color": color}});
 		this.text.inject(this.dom, 'top');
