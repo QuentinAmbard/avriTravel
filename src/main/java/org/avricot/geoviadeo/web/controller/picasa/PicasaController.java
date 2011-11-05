@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.avricot.geoviadeo.web.controller.picasa.domain.Album;
 import org.avricot.geoviadeo.web.controller.picasa.domain.LatLng;
 import org.avricot.geoviadeo.web.controller.picasa.domain.Photo;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gdata.client.http.AuthSubUtil;
 import com.google.gdata.client.photos.PicasawebService;
 import com.google.gdata.data.photos.AlbumEntry;
 import com.google.gdata.data.photos.AlbumFeed;
@@ -25,18 +28,23 @@ public class PicasaController {
 
 	@ResponseBody
 	@RequestMapping(value = "/albums", method = RequestMethod.GET)
-	public List<Album> listAlbums() {
+	public List<Album> listAlbums(HttpServletRequest request) {
+
 		List<Album> albumList = new ArrayList<Album>();
 		try {
 			System.out.println("OK");
 			PicasawebService myService = null;
 			myService = new PicasawebService("avriTravel");
-			myService.setUserCredentials("avricot.team@gmail.com",
-					"table78table");
+			String token = (String) request.getSession().getAttribute("token");
+			System.out.println("Token before sent" + token);
+
+			String sessionToken = AuthSubUtil.exchangeForSessionToken(token,
+					null);
+			myService.setAuthSubToken(sessionToken);
 
 			URL feedUrl;
 			feedUrl = new URL(
-					"https://picasaweb.google.com/data/feed/api/user/avricot.team@gmail.com?kind=album");
+					"https://picasaweb.google.com/data/feed/api/user/default?kind=album");
 
 			UserFeed myUserFeed;
 			myUserFeed = myService.getFeed(feedUrl, UserFeed.class);

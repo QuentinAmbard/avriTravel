@@ -1,5 +1,8 @@
 package org.avricot.geoviadeo.web.controller.picasa;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.avricot.geoviadeo.web.controller.picasa.domain.RegisteredRequestResult;
@@ -15,10 +18,17 @@ public class TokenController {
 
 	@ResponseBody
 	@RequestMapping(value = "/")
-	public String registerToken(HttpServletRequest request) {
-		String token = request.getQueryString().substring("token=".length(),
-				request.getQueryString().length() - 1);
-		request.getSession().setAttribute("token", token);
+	public String registerToken(HttpServletRequest request)
+			throws UnsupportedEncodingException {
+		// String token = request.getQueryString().substring("token=".length(),
+		// request.getQueryString().length() - 1);
+		request.getSession().setAttribute("token",
+				AuthSubUtil.getTokenFromReply(request.getQueryString()));
+		System.out
+				.println("Token Received "
+						+ URLDecoder.decode(AuthSubUtil
+								.getTokenFromReply(request.getQueryString()),
+								"UTF-8"));
 		return "<html>" + "<head></head>" + "<body onload=\"window.close()\">"
 				+ "</body>" + "</html>";
 	}

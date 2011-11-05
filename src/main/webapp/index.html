@@ -71,18 +71,20 @@
   	$('footer').setStyle('bottom', 0);
   	$('hackFb').setStyle('bottom', 4);
   }, false);
+
    window.addEvent('domready', function() {
 	    if(Detector.webgl){
-	    	var geoTravel = new GeoTravel('container');
-	    	GB.geoTravel = geoTravel;
-	    	geoTravel.start();
+// 	    	var geoTravel = new GeoTravel('container');
+// 	    	GB.geoTravel = geoTravel;
+// 	    	geoTravel.start();
+	    	
 	    	$('start3d').addEvent('click', function () {
 	    		var jsonRequest = new Request.JSON({url: './server/redirect/test', 
 	    			headers:{'Content-type':'application/json'},
 	    			urlEncoded: false,
 	    			onSuccess: function(registered){
 	    				if(registered.isRegistered){
-	    					console.log("OK");
+	    					getAlbums();
 	    				}else {
 	    					tokenWindow = window.open(registered.redirectUrl, 'AvriTravel', config='height=600, width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');
 	    					
