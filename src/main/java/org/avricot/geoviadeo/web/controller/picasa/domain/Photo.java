@@ -15,7 +15,7 @@ public class Photo {
 	}
 
 	public void setNormalLink(String normalLink) {
-		this.normalLink = normalLink;
+		this.normalLink = encodeLinkForProxy(normalLink);
 	}
 
 	public String getThumbnailLink() {
@@ -23,7 +23,11 @@ public class Photo {
 	}
 
 	public void setThumbnailLink(String thumbnailLink) {
-		this.thumbnailLink = thumbnailLink;
+		this.thumbnailLink = encodeLinkForProxy(thumbnailLink);
+	}
+
+	private String encodeLinkForProxy(String link) {
+		return "server/proxy/url/?url=" + link;
 	}
 
 	public Long getTimestamp() {
