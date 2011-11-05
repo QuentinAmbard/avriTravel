@@ -27,6 +27,7 @@
 	<script type="text/javascript" src="./resources/js/city.js"></script>
 	<script type="text/javascript" src="./resources/js/utils.js"></script>
 	<script type="text/javascript" src="./resources/js/social.js"></script>
+	<script type="text/javascript" src="./resources/js/picasa.js"></script>
 
     <script type="text/javascript" src="./resources/js/photoHelper.js"></script>
     <script type="text/javascript" src="./resources/js/photo.js"></script>
@@ -79,43 +80,59 @@
 		<input type="submit" id="search" value="GeoSearch" class="searchButton callToaction"/>
 		<div id="loader" style="color: #ececec"><img style="float:left" src="./resources/images/loader.gif"/><div style="margin: 2px 0px 0px 3px; width: 200px">Geocoding in progress.<br/> please wait...</div></div>
 	</form>
+
 </header> --> 
-<!-- 
+
 <div id="connect"> 
-	<h1>geoViadeo</h1> 
-	<p> Explore the world, show your connections and discover new ones...<br />
-	AvriGeo provides an efficient way to visualize and understand your social networks.<br />
-	Play with the planet and discover how your own web is woven.</p> 
+	<h1>AvriTravel</h1> 
+	<p> Travel through the world and through time thanks to AvriTravel</p> 
 	<div style="float:right;padding:10px;padding-right:30px;">
 		<input id="start3d" type="submit" value="Start3D" class="Start3D callToaction"/><br /> 
-		(Requires a Viadeo account)
+		(Requires a Picasa account)
 	</div>
 	<br />
 	<div style="margin-top: 50px">
-	<p>AvriGeo 3D requires a recent browser with OpenGL enabled. <a href="http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" target="_blank">?</a></p>
+	<p>AvriTravel 3D requires a recent browser with OpenGL enabled. <a href="http://www.khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" target="_blank">?</a></p>
 	</div>
 	<div id="video" style="text-align: center; margin-top: 10px">
 	</div>
 </div>
- --> 
+ 
   <script type="text/javascript">
   if(!Detector.webgl){
 	      $$("body").setStyle("background", "url(./resources/images/fond.jpg) center center no-repeat, url(./resources/images/stars.jpg) ");
 	      $('connect').setStyle('height', 520);
 	      $('start3d').setAttribute("value","3D not avaible");
 	      $('start3d').addEvent("submit", function () {return false;});
-	      $('video').set('html', '<strong>Sorry, your browser doesn\'t support WebGL. A 2D version is planned. Meanwhile, you can watch AvriGeo in action :</strong><br /> <iframe width="300" height="182" src="http://www.youtube.com/embed/g0i80Mwob2U" frameborder="0" allowfullscreen></iframe>');
-  }
+// 	      $('video').set('html', '<strong>Sorry, your browser doesn\'t support WebGL. A 2D version is planned. Meanwhile, you can watch AvriGeo in action :</strong><br /> <iframe width="300" height="182" src="http://www.youtube.com/embed/g0i80Mwob2U" frameborder="0" allowfullscreen></iframe>');
+  } 
 
   window.addEventListener('resize', function () {
   	$('footer').setStyle('bottom', 0);
   	$('hackFb').setStyle('bottom', 4);
   }, false);
+
    window.addEvent('domready', function() {
 	    if(Detector.webgl){
-	    	var geoTravel = new GeoTravel('container');
-	    	GB.geoTravel = geoTravel;
-	    	geoTravel.start();
+// 	    	var geoTravel = new GeoTravel('container');
+// 	    	GB.geoTravel = geoTravel;
+// 	    	geoTravel.start();
+	    	
+	    	$('start3d').addEvent('click', function () {
+	    		var jsonRequest = new Request.JSON({url: './server/redirect/test', 
+	    			headers:{'Content-type':'application/json'},
+	    			urlEncoded: false,
+	    			onSuccess: function(registered){
+	    				if(registered.isRegistered){
+	    					getAlbums();
+	    				}else {
+	    					tokenWindow = window.open(registered.redirectUrl, 'AvriTravel', config='height=600, width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');
+	    					
+	    					setTimeout("checkToken()", 5000);
+	    				}
+	    			}
+	    		}).send();
+	    	});
 	    }
     });
    
@@ -129,7 +146,7 @@
     });
     
     window.setTimeout(function() {
-	    $('footerEl').fade(0.6);
+// 	    $('footerEl').fade(0.6);
 	}, 5000);
     
   </script>
