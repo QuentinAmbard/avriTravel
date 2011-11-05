@@ -16,6 +16,8 @@ var GeoTravel = new Class({
 	mouseUp : false,
 	rotationAuto: true,
 	timerBeforeRotationAuto: null,
+	moveLinear: false,
+	photoHelper: null,
 	lines: [],
 	rotation : {
 		x : -Math.PI/3,
@@ -92,6 +94,29 @@ var GeoTravel = new Class({
 
 		var stars = new Stars();
 		this.scene.addChild(stars.particleSystem);
+		
+		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 300,0,0 )], 0xFF0000));
+		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 0,300,0 )], 0x00FF00));
+		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 0,0,300 )], 0x8888FF));
+		//// TESTTTTTTTTTT
+		
+		var locs = [40.71435, 	-74.00597,48.85661, 	2.35222,-33.87365, 	151.20689,-37.81319, 	144.96298,-14.23500, 	-51.92528,-43.53205, 	172.63623];
+		
+		this.photoHelper = new PhotoHelper(this);
+		var that=this;
+		for(var i=0; i< locs.length;i+=2){
+			(function(a, b, i){
+			setTimeout(function(){
+				that.photoHelper.displayNextPhoto(a, b, '#');
+			}, 4000*i);
+			})(locs[i], 	locs[i+1], i);
+		}
+		
+//		var that = this;
+//		setTimeout(function(){that.photoHelper.photos[1].showPhoto()}, 3000);
+//		setTimeout(function(){that.photoHelper.photos[0].showPhoto()}, 5000);
+//		
+		//// TESTTTTTTTTTT
 	},
 	displayLoader: function () {
 		$('loader').setStyle("display","inline");
@@ -169,6 +194,12 @@ var GeoTravel = new Class({
 		}
 		return false;
 	},
+	setGlobePosition : function(lat, lng) {
+		//this.target.x = (lng - 90 + 360) * Math.PI / 180 + Math.floor(this.rotation.x/(2*Math.PI))*2*Math.PI;
+		//this.target.y = lat * Math.PI / 180;
+		this.target.x = (lng-90) * Math.PI / 180;
+		this.target.y = lat * Math.PI / 180;
+	},
 	onDocumentKeyDown : function(event) {
 		switch (event.keyCode) {
 		case 38:
@@ -189,7 +220,7 @@ var GeoTravel = new Class({
 	zoom : function(delta) {
 		this.distanceTarget -= delta;
 		this.distanceTarget = this.distanceTarget > 1000 ? 1000 : this.distanceTarget;
-		this.distanceTarget = this.distanceTarget < 350 ? 350 : this.distanceTarget;
+		this.distanceTarget = this.distanceTarget < 250 ? 250 : this.distanceTarget;
 	},
 	animate : function() {
 		var that = this;
@@ -202,15 +233,22 @@ var GeoTravel = new Class({
 	render : function() {
 		this.zoom(this.curZoomSpeed);
 		
-		if(this.rotationAuto) {
-			this.rotation.x -= 0.001;
+		if (this.moveLinear) {
+			if(this.distanceTarget>this.distance){
+				this.distance += 2;
+			} else {
+				this.distance -= 2;
+			}
+		} else {
+			this.distance += (this.distanceTarget - this.distance) * 0.1;
 		}
-		else {
+		
+		/*if (this.rotationAuto) {
+			this.rotation.x -= 0.001;
+		} else*/ {
 			this.rotation.x += (this.target.x - this.rotation.x) * 0.1;
 			this.rotation.y += (this.target.y - this.rotation.y) * 0.1;
 		}
-				
-		this.distance += (this.distanceTarget - this.distance) * 0.1;
 
 		this.camera.position.x = this.distance * Math.sin(this.rotation.x) * Math.cos(this.rotation.y);
 		this.camera.position.y = this.distance * Math.sin(this.rotation.y);
@@ -221,8 +259,28 @@ var GeoTravel = new Class({
 			y : this.rotation.y * 360 / Math.PI / 2,
 			z : 0
 		};
+		
+		var deg = {
+				x : this.rotation.x * 360 / Math.PI / 2,
+				y : this.rotation.y * 360 / Math.PI / 2,
+				z : 0
+			};
+
+		for ( var j = 0; j < this.photoHelper.photos.length; j++) {
+			var photo = this.photoHelper.photos[j];
+//			v = new THREE.Vector3(-deg.y * 2 + photo.lat * 2, deg.x * 2 + 90 * 2 - photo.lng * 2, 0);
+//			var quaternion = new THREE.Quaternion();
+//			quaternion.setFromEuler(v);
+//			photo.pictureObject3d.quaternion = quaternion;
+			v = new THREE.Vector3(-deg.y * 2 , deg.x * 2, 0);
+			var quaternion = new THREE.Quaternion();
+			quaternion.setFromEuler(v);
+			photo.photoObject3d.quaternion = quaternion;
+		}
 
 		this.renderer.clear();
 		this.renderer.render(this.scene, this.camera);
+		
+		
 	}
 });

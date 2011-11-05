@@ -5,6 +5,7 @@
 	<meta name="description" content="avriGeo - Find your connections around the world">
 	<title>avriGeo</title>
 	<link href="./resources/styles/default.css" rel="stylesheet" type="text/css" />
+	<link href="./resources/styles/clock.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="./resources/js/mootools.js"></script>
 	<script type="text/javascript" src="./resources/js/mootools-more-1.4.0.1.js"></script>
 	
@@ -27,20 +28,58 @@
 	<script type="text/javascript" src="./resources/js/utils.js"></script>
 	<script type="text/javascript" src="./resources/js/social.js"></script>
 
+    <script type="text/javascript" src="./resources/js/photoHelper.js"></script>
+    <script type="text/javascript" src="./resources/js/photo.js"></script>
+    
+    <script type="text/javascript" src="./resources/js/clock/animate.js"></script>
 </head>
 
 <body>
+
+
+	<div id="wrapper">
+	
+	    <div id="back">
+	         <div id="upperHalfBack">
+	                <img src="resources/images/clock/spacer.png" /><img id="hoursUpBack" src="resources/images/clock/Single/Up/AM/0.png"/>
+	                <img id="minutesUpLeftBack" src="resources/images/clock/Double/Up/Left/0.png" class="asd" /><img id="minutesUpRightBack" src="resources/images/clock/Double/Up/Right/0.png"/>
+	                <img id="secondsUpLeftBack" src="resources/images/clock/Double/Up/Left/0.png" /><img id="secondsUpRightBack" src="resources/images/clock/Double/Up/Right/0.png"/>
+	         </div>
+	         <div id="lowerHalfBack">
+	               <img src="resources/images/clock/spacer.png" /><img id="hoursDownBack" src="resources/images/clock/Single/Down/AM/0.png" />
+	               <img id="minutesDownLeftBack" src="resources/images/clock/Double/Down/Left/0.png" /><img id="minutesDownRightBack" src="resources/images/clock/Double/Down/Right/0.png" />
+	               <img id="secondsDownLeftBack" src="resources/images/clock/Double/Down/Left/0.png" /><img id="secondsDownRightBack" src="resources/images/clock/Double/Down/Right/0.png" />
+	         </div>
+	    </div>
+	    
+	    
+	    <div id="front">
+	         <div id="upperHalf">
+	                <img src="resources/images/clock/spacer.png" /><img id="hoursUp" src="resources/images/clock/Single/Up/AM/0.png"/>
+	                <img id="minutesUpLeft" src="resources/images/clock/Double/Up/Left/0.png" /><img id="minutesUpRight" src="resources/images/clock/Double/Up/Right/0.png"/>
+	                <img id="secondsUpLeft" src="resources/images/clock/Double/Up/Left/0.png" /><img id="secondsUpRight" src="resources/images/clock/Double/Up/Right/0.png"/>
+	         </div>
+	         <div id="lowerHalf">
+	                <img src="resources/images/clock/spacer.png" /><img id="hoursDown" src="resources/images/clock/Single/Down/AM/0.png"/>
+	               <img id="minutesDownLeft" src="resources/images/clock/Double/Down/Left/0.png" /><img id="minutesDownRight" src="resources/images/clock/Double/Down/Right/0.png" />
+	               <img id="secondsDownLeft" src="resources/images/clock/Double/Down/Left/0.png" /><img id="secondsDownRight" src="resources/images/clock/Double/Down/Right/0.png" />
+	         </div>
+	    </div>
+	 
+	    
+	</div>
+
 	<div id="container"></div>
 
-<header id="header" style="opacity:0"> 
+<!-- <header id="header" style="opacity:0"> 
 	<form id="inputSearch">
 		<input type="text" id="inputName" title="Firstname/Lastname" class="field"/> 
 		<input type="text"  id="inputCompany" title="Company" class="field"/> 
-		<!--<input type="text" id="inputJob" title="Job" class="field"/>--> 
+		<input type="text" id="inputJob" title="Job" class="field"/> 
 		<input type="submit" id="search" value="GeoSearch" class="searchButton callToaction"/>
 		<div id="loader" style="color: #ececec"><img style="float:left" src="./resources/images/loader.gif"/><div style="margin: 2px 0px 0px 3px; width: 200px">Geocoding in progress.<br/> please wait...</div></div>
 	</form>
-</header> 
+</header> --> 
 <!-- 
 <div id="connect"> 
 	<h1>geoViadeo</h1> 
@@ -94,19 +133,6 @@
 	}, 5000);
     
   </script>
-  <div id="infoSearch"></div>
-  <div id="rightPanel">
-  <div id="hideRightPanel">&nbsp;</div>
-  <div id="social">
-  	<span>Exploring <span id="meName"></span>'s connections.</span>
-    <h2 id="cityName"> </h2>
-    <span id="lat"> </span>
-    <span id="lon"> </span>
-    <span id="contactNumber"> </span>
-        <ul id="contactList">
-        </ul>
-    </div>
-    </div>
 <!--
 <footer id="footerEl" >
 	<div id="footer">

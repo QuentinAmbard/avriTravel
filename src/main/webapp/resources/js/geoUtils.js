@@ -103,6 +103,26 @@ var GeoUtils = new Class({
 		var z = radius * Math.sin(phi) * Math.sin(theta);
 		return new THREE.Vector3(x, y, z);
 	},
+	
+	geGeoFromVector3D : function(vector, radius) {
+		radius = radius || this.radius ;
+		var x = vector.x;
+		var y = vector.y;
+		var z = vector.z;
+		
+		var phi = Math.acos(y / radius);
+		var theta = Math.acos(x / radius / Math.sin(phi));
+		//var theta = Math.asin(z / radius / Math.sin(phi));
+		
+		var lat = -( phi / (Math.PI / 180) - 90 );
+		var lng = -( theta / (Math.PI / 180) -180 );
+		
+		if(x < 0) {
+			lng *=-1;
+		}
+		
+		return [lat, lng];
+	},
 	/**
 	 * Return a THREE.Line following the given points.
 	 */
