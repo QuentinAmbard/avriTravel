@@ -378,4 +378,3 @@ var data = [{
                 "endDate": 1183165247000
             }
         ]
->>>>>>> timeline-integration
