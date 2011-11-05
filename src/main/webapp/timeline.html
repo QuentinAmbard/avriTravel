@@ -9,6 +9,7 @@
 	<script type="text/javascript" src="./resources/js/mootools-more-1.4.0.1.js"></script>
 	
 	<script type="text/javascript" src="./resources/js/third-party/tween.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/reflexion.js"></script>
 	<script type="text/javascript" src="./resources/js/third-party/three/ThreeWebGL.js"></script>
 	<script type="text/javascript" src="./resources/js/third-party/three/ThreeExtras.js"></script>
 	<script type="text/javascript" src="./resources/js/third-party/three/RequestAnimationFrame.js"></script>
@@ -35,29 +36,50 @@
 	<div id="container"></div>
 
   <script type="text/javascript">
+  TWEEN.start();
    window.addEvent('domready', function() {
+	  	 
     	var timeLine = new TimeLine();
-    	var album1 = new Album ("New Zealand", [], "#7d66ed");
-    	album1.injectToTimeLine(100, 75);
-    	var album2 = new Album ("A Peru Journey", [], "#d63a3a");
-    	album2.injectToTimeLine(300, 150);
+    	var album1 = new Album ({"startDate": 1182196544000, "endDate": 1183165247000}, 1, "France", [
+    	                                                                        	                  {timestamp: 1182196544000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182196544003, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182235809000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182345809000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182455227000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182865247000, thumbnailLink: "./resources/images/viadeoGeo.png"}
+    	  ], "#7d66ed");
+    	timeLine.injectAlbum(album1, 100, 75);
+    	var album2 = new Album ({"startDate": 1182196544000, "endDate": 1183165247000}, 2, "Mewico", [
+    	                  {timestamp: 1182196544000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                  {timestamp: 1182196544003, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                  {timestamp: 1182235809000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                  {timestamp: 1182345809000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                  {timestamp: 1182455227000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                  {timestamp: 1182865247000, thumbnailLink: "./resources/images/viadeoGeo.png"}
+    	], "#d637d6");
+    	timeLine.injectAlbum(album2, 300, 175);
+    	var album3 = new Album ({"startDate": 1182196544000, "endDate": 1183165247000}, 3, "Los Angeles", [
+    	                                                                        	                  {timestamp: 1182196544000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182196544003, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182235809000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182345809000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182455227000, thumbnailLink: "./resources/images/viadeoGeo.png"},
+    	                                                                        	                  {timestamp: 1182865247000, thumbnailLink: "./resources/images/viadeoGeo.png"}
+    	  ], "#d63a3a");
+    	timeLine.injectAlbum(album3, 600, 155);
     });
   </script>
   
   <div id="timeLineContainer">
-	<div id="timeLine">
-	<div id="timeLine"><!-- 
-		<div class="albumContainer" style="left: 100px">
-			<div class="album" style="left: 0px; ">A Peru Journey</div>
-			<div class="albumV" style="left: 5px; "></div>
-			<div class="albumPoint" style="left: 10px; "></div>
-		</div>		
-		<div class="albumContainer" style="left: 300px">
-			<div class="album" style="left: 0px; ">New Zealand</div>
-			<div class="albumV" style="left: 5px; "></div>
-			<div class="albumPoint" style="left: 10px; "></div>
-		</div>		 -->
-		<div id="timeLineBar"></div>
+	  <div id="timeLine">
+	  	<!-- 
+	  	<div class="albumContainer" style="background-color: rgb(214, 58, 58); left: 583px; width: 175px; ">
+	  		<div class="albumPoint"></div><div class="albumV"></div><div class="album">A Peru Journey</div>
+	  	</div>
+	  	<div class="albumContainer" style="background-color: rgb(125, 102, 237); left: 383px; width: 75px; "><div class="albumPoint"></div><div class="albumV"></div><div class="album">New Zealand</div>
+	  	</div>
+	  	 -->
+	  <div id="timeLineBar"></div>
 	</div>
   </div>
 
