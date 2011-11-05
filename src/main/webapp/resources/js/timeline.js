@@ -7,10 +7,24 @@ var TimeLine = new Class({
 	initialize: function(options){
 		this.timeLineBar = $('timeLineBar') ;
 		this.timeLine = $('timeLine') ;
+		this.cursor = $('cursor');
 		this.leftTimeLineBar = this.timeLineBar.getPosition().x ;
 		this.rightTimeLineBar = this.timeLineBar.getPosition().x+this.timeLineBar.getSize().x ;
 	},
 	colors: ["#d637d6", "#d63a3a", "#7d66ed", "#d637d6", "#d63a3a", "#7d66ed"],
+	moveToPicture: function (picture, time) {
+		//Move the cursor:
+		var that = this ;
+		var d = picture.timestamp -clockDate;
+		var left = Math.round(d/that.secPerPixel) +this.leftTimeLineBar;
+		this.cursor.set('morph', {duration: time});
+		this.cursor.morph({left: left});
+		
+		new TWEEN.Tween( {p: clockDate} ).to( { p: picture.timestamp}, time ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
+			setClock(Math.round(this.p));
+		}).onComplete(function () {return this;}).start();
+		//setTimeout(function () {that.moveToPicture(that.albumDisplayed.pictures[1], time);}, 3000);
+	},
 	init: function(albums) {
 		for(var i =0;i<albums.length;i++) {
 			var album = new Album( albums[i], this.colors[i]);
@@ -37,6 +51,7 @@ var TimeLine = new Class({
 	status: 0,
 	albumDisplayed: null,
 	displayAllAlbum: function () {
+		this.cursor.fade(0);
 		this.status=-1;
 		var that = this;
 		//Hide pictures
@@ -101,21 +116,25 @@ var TimeLine = new Class({
 			}
 		}
 	},
+	secPerPixel: 10,
 	displayAlbum: function (albumToDisplay) {
+		this.cursor.setStyle('left', this.leftTimeLineBar);
+		this.cursor.fade(1);
+		setClock(albumToDisplay.startDate);
 		this.fireEvent("displayAlbum", albumToDisplay);
 		this.albumDisplayed = albumToDisplay;
 		this.status = 2 ;
 		
 		//Display images:
-		var secPerPixel = (albumToDisplay.endDate-albumToDisplay.startDate)/this.timeLineBar.getSize().x;
+		this.secPerPixel = (albumToDisplay.endDate-albumToDisplay.startDate)/this.timeLineBar.getSize().x;
 		var lastLeft = 0 ;
 		var lastTimestamp = albumToDisplay.startDate ;
 		var pictureWidth = albumToDisplay.picture.getStyle('width').toInt();
 		for(var i =0;i<albumToDisplay.pictures.length;i++) {
 			var picture = albumToDisplay.pictures[i];
-			var delta = Math.round((picture.timestamp-lastTimestamp)/ secPerPixel);
+			var delta = Math.round((picture.timestamp-lastTimestamp)/ this.secPerPixel);
 			if(delta>pictureWidth) {
-				var left = Math.round((picture.timestamp-albumToDisplay.startDate)/ secPerPixel);
+				var left = Math.round((picture.timestamp-albumToDisplay.startDate)/ this.secPerPixel);
 				lastTimestamp = picture.timestamp ;
 				var pictureDom = new Element('img', {'class': 'albumImg', width: "52px",  height: "38px", src: picture.thumbnailLink});
 				pictureDom.inject(albumToDisplay.dom, 'top');

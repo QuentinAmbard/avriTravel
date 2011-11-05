@@ -81,14 +81,12 @@
 			
 		
 	}
-	
+	var clockDate = 1320533733000;
 	function setClock(date) {
-		var date = new Date(Math.floor(date/1000));
+		clockDate = date ;
+		var date = new Date(Math.floor(date));
 		retroClock(date.getMonth()+1, date.getDay()-1, date.getFullYear());
 	}
 	
-//	setTimeout(function(){
-//	setClock(1320532857  * 1000 *1000);
-//	}, 1000);
 			
 	

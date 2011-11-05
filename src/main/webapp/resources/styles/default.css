@@ -215,6 +215,15 @@ input.field {
 }
 
 
+#cursor {
+	position: absolute;
+	width: 20px;	
+	height: 20px;
+	background-color: red;
+	left: 200px;
+	opacity: 0;
+	z-index: 99999;
+}
 
 #timeLineContainer {
 	width: 100%;
@@ -253,7 +262,7 @@ input.field {
 	overflow: hidden;
 	position: relative;
 	top: -130px;
-	left: 0px;
+	left: -7px;
 	border-bottom: 1px solid #540000;
 	text-align: left;
 	cursor: pointer;
@@ -262,15 +271,15 @@ input.field {
 
 .albumV {
 	width: 10px;
-	height: 20px;
+	height: 21px;
 	left: 5px;
-	top: -60px;	
+	top: -46px;	
 	position: relative;
 	border-right: 1px solid #540000;
 	cursor: pointer;
 }
 .albumPoint {
-	top: -30px;	
+	top: -15px;	
 	left: 10px;
 	position: relative;
 	width: 10px;
@@ -280,6 +289,7 @@ input.field {
 	-webkit-border-radius: 10px;
 	cursor: pointer;
 }
+
 .albumImg {
 	position: absolute;
 	top: 30px;

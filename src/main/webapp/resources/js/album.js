@@ -38,8 +38,8 @@ var Album = new Class({
 		});
 	},
 	goUp: function () {
-		this.text.morph({top: this.initTop-this.options.deltaTopHover*2, "padding-left": 10});
-		this.vBar.morph({"top": this.initTopV-this.options.deltaTopHover, "height": this.initHeight+ this.options.deltaTopHover});
+		this.text.morph({top: this.initTop-this.options.deltaTopHover*2, "padding-left": 15});
+		this.vBar.morph({"top": this.initTopV-this.options.deltaTopHover+5, "height": this.initHeight+ this.options.deltaTopHover});
 	},
 	goDown: function () {
 		this.text.morph({top: this.initTop, "padding-left": 0});
