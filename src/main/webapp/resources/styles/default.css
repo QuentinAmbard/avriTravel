@@ -41,7 +41,7 @@ table {
 }
 
 #footer a {
-    color: #F7F7F7;
+    color: #fffeeb;
 }
 #infoSearch {
 	position: absolute;
@@ -69,7 +69,7 @@ table {
 body {
 	font: 12px verdana, helvetica, arial;
 	background-color: black;
-	color: #343434;
+	color: #e0e0e0;
 }
 
 .callToaction {
@@ -224,12 +224,12 @@ input.field {
 	text-align: center;
 }
 #timeLine {
-	width: 800px;
+	width: 85%;
 	margin: auto;
 }
 #timeLineBar {
 	background-color: #5c4d4d ;
-	height: 20px;
+	height: 15px;
 	border-radius: 10px; 
 	-moz-border-radius: 10px; 
 	-webkit-border-radius: 10px; 
@@ -238,19 +238,28 @@ input.field {
 
 .albumContainer {
 	position: absolute;
-	height: 20px;
+	height: 15px;
+	cursor: pointer;
+	border-radius: 10px; 
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px; 
+	text-align: left;
 }
 .album {
+	font-family: AngelinaRegular, sans-serif;
 	-webkit-transform: rotate(-40deg); 
 	-moz-transform: rotate(-40deg);
-	width: 100px;
+	width: 120px;
 	overflow: hidden;
 	position: relative;
 	top: -130px;
 	left: 0px;
 	border-bottom: 1px solid #540000;
 	text-align: left;
+	cursor: pointer;
+	font-size: 2.1em;
 }
+
 .albumV {
 	width: 10px;
 	height: 20px;
@@ -258,6 +267,7 @@ input.field {
 	top: -60px;	
 	position: relative;
 	border-right: 1px solid #540000;
+	cursor: pointer;
 }
 .albumPoint {
 	top: -30px;	
@@ -265,11 +275,48 @@ input.field {
 	position: relative;
 	width: 10px;
 	height: 10px;
-	background-color: #540000;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+	cursor: pointer;
 }
+.albumImg {
+	position: absolute;
+	top: 30px;
+	left: 0px;
+	width: 52px;
+	height: 38px;
+}
+
+
+@font-face {
+    font-family: 'JustTheWayYouAreRegular';
+    src: url('../fonts/justthewayyouare-webfont.eot');
+    src: url('../fonts/justthewayyouare-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/justthewayyouare-webfont.woff') format('woff'),
+         url('../fonts/justthewayyouare-webfont.ttf') format('truetype'),
+         url('../fonts/justthewayyouare-webfont.svg#JustTheWayYouAreRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'AngelinaRegular';
+    src: url('../fonts/angelina-webfont.eot');
+    src: url('../fonts/angelina-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/angelina-webfont.woff') format('woff'),
+         url('../fonts/angelina-webfont.svg#AngelinaRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/* url('../fonts/justthewayyouare-webfont.ttf') format('truetype'), */
+
+
+
+
+
+
 
 	#tinyalert{
 		position: fixed;

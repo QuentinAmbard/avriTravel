@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="avriGeo - Find your connections around the world">
+	<title>avriGeo</title>
+	<link href="./resources/styles/default.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript" src="./resources/js/third-party/tween.js"></script>
+</head>
+
+<body>
+	<div id="container"></div>
+
+  <script type="text/javascript">
+	var dummy = { p: 0 };
+	var position = { x: 0, y: 0 };
+	TWEEN.start();
+	new TWEEN.Tween( dummy ).to( { p: 1 }, 2000 ).easing( TWEEN.Easing.Linear.EaseNone ).onUpdate( function() {
+		console.log(this);
+	}).start();
+	/*
+   window.addEvent('domready', function() {
+    	var timeLine = new TimeLine();
+    	var album1 = new Album (1, "New Zealand", [], "#7d66ed");
+    	timeLine.injectAlbum(album1, 10, 75);
+    	var album2 = new Album (2, "Sidney", [], "#d637d6");
+    	timeLine.injectAlbum(album2, 300, 175);
+    	var album3 = new Album (3, "A Peru Journey", [], "#d63a3a");
+    	timeLine.injectAlbum(album3, 600, 155);
+    });*/
+  </script>
+  
+  <div id="timeLineContainer">
+	  <div id="timeLine">
+	  	<!-- 
+	  	<div class="albumContainer" style="background-color: rgb(214, 58, 58); left: 583px; width: 175px; ">
+	  		<div class="albumPoint"></div><div class="albumV"></div><div class="album">A Peru Journey</div>
+	  	</div>
+	  	<div class="albumContainer" style="background-color: rgb(125, 102, 237); left: 383px; width: 75px; "><div class="albumPoint"></div><div class="albumV"></div><div class="album">New Zealand</div>
+	  	</div>
+	  	 -->
+	  <div id="timeLineBar"></div>
+	</div>
+  </div>
+
+</body> 
+</html>	
+	
