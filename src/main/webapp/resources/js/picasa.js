@@ -7,7 +7,8 @@
 			method: 'get',
 			onSuccess: function(registered){
 				if(registered.isRegistered){
-					getAlbums();
+					hidePopUp();
+//					getAlbums();
 				}else {
 					console.log("Not Yet");
 					setTimeout("checkToken()", 2000);
@@ -26,4 +27,13 @@
 				console.log(text);
 			}
 		}).send();
-	}	    
+	}	  
+  
+  function hidePopUp ( )
+	{
+	  	$('connect').fade().get('tween').chain(function () {
+		  $('connect').setStyle('display', 'none');
+		  });
+//		  this.fireEvent('logged');
+
+	}

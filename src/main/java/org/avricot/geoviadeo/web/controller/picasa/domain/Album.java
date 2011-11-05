@@ -11,14 +11,14 @@ public class Album {
 	private Integer photosNumber;
 	private Long startDate;
 	private Long endDate;
-	private List<Photo> photos = new ArrayList<Photo>();
+	private List<Photo> pictures = new ArrayList<Photo>();
 
 	public List<Photo> getPhotos() {
-		return photos;
+		return pictures;
 	}
 
 	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
+		this.pictures = photos;
 	}
 
 	public String getDescription() {

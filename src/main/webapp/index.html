@@ -119,7 +119,8 @@
 	    			urlEncoded: false,
 	    			onSuccess: function(registered){
 	    				if(registered.isRegistered){
-	    					getAlbums();
+	    					hidePopUp();
+// 	    					getAlbums();
 	    				}else {
 	    					tokenWindow = window.open(registered.redirectUrl, 'AvriTravel', config='height=600, width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');
 	    					

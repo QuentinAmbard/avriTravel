@@ -38,8 +38,12 @@ public class PicasaController {
 			String token = (String) request.getSession().getAttribute("token");
 			System.out.println("Token before sent" + token);
 
-			String sessionToken = AuthSubUtil.exchangeForSessionToken(token,
-					null);
+			String sessionToken = (String) request.getSession().getAttribute(
+					"sessionToken");
+			if (sessionToken == null) {
+				sessionToken = AuthSubUtil.exchangeForSessionToken(token, null);
+			}
+			request.getSession().setAttribute("sessionToken", sessionToken);
 			myService.setAuthSubToken(sessionToken);
 
 			URL feedUrl;
