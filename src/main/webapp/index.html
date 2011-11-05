@@ -19,6 +19,9 @@
 	<script type="text/javascript" src="./resources/js/third-party/tiny_alert.js"></script>
 
 	<script type="text/javascript" src="./resources/js/viadeo.js"></script>
+	<script type="text/javascript" src="./resources/js/third-party/reflexion.js"></script>	
+	<script type="text/javascript" src="./resources/js/timeline.js"></script>
+	<script type="text/javascript" src="./resources/js/album.js"></script>
 	<script type="text/javascript" src="./resources/js/avritravel.js"></script>
 	<script type="text/javascript" src="./resources/js/user.js"></script>
 	<script type="text/javascript" src="./resources/js/stars.js"></script>
@@ -109,6 +112,7 @@
 
    window.addEvent('domready', function() {
 	    if(Detector.webgl){
+	    	TWEEN.start();
  	    	var geoTravel = new GeoTravel('container');
  	    	GB.geoTravel = geoTravel;
  	    	geoTravel.start();
@@ -128,23 +132,30 @@
 	    			}
 	    		}).send();
 	    	});
+	    	var timeLine = new TimeLine();
+	    	timeLine.init(data);
 	    }
     });
    
-    $$('.field').each(function (el) {
-    	el.set('value', el.get('title'));
-    	el.addEvent('click', function () {
-    		if(el.get('value') == el.get('title')) {
-    			el.set('value', '');
-    		}
-    	});
-    });
-    
     window.setTimeout(function() {
 // 	    $('footerEl').fade(0.6);
 	}, 5000);
     
   </script>
+  
+    <div id="timeLineContainer">
+	  <div id="timeLine">
+	  	<!-- 
+	  	<div class="albumContainer" style="background-color: rgb(214, 58, 58); left: 583px; width: 175px; ">
+	  		<div class="albumPoint"></div><div class="albumV"></div><div class="album">A Peru Journey</div>
+	  	</div>
+	  	<div class="albumContainer" style="background-color: rgb(125, 102, 237); left: 383px; width: 75px; "><div class="albumPoint"></div><div class="albumV"></div><div class="album">New Zealand</div>
+	  	</div>
+	  	 -->
+	  <div id="timeLineBar"></div>
+	</div>
+  </div>
+  
 <!--
 <footer id="footerEl" >
 	<div id="footer">

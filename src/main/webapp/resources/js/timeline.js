@@ -10,6 +10,13 @@ var TimeLine = new Class({
 		this.leftTimeLineBar = this.timeLineBar.getPosition().x ;
 		this.rightTimeLineBar = this.timeLineBar.getPosition().x+this.timeLineBar.getSize().x ;
 	},
+	colors: ["#d637d6", "#d63a3a", "#7d66ed", "#d637d6", "#d63a3a", "#7d66ed"],
+	init: function(albums) {
+		for(var i =0;i<albums.length;i++) {
+			var album = new Album( albums[i], this.colors[i]);
+			this.injectAlbum(album, 100, 100);
+		}
+	},
 	injectAlbum: function (album, left, width) {
 		album.left = left + this.timeLineBar.getPosition().x;
 		album.width = width;
@@ -95,19 +102,20 @@ var TimeLine = new Class({
 		}
 	},
 	displayAlbum: function (albumToDisplay) {
+		this.fireEvent("displayAlbum", albumToDisplay);
 		this.albumDisplayed = albumToDisplay;
 		this.status = 2 ;
 		
 		//Display images:
-		var secPerPixel = (albumToDisplay.obj.endDate-albumToDisplay.obj.startDate)/this.timeLineBar.getSize().x;
+		var secPerPixel = (albumToDisplay.endDate-albumToDisplay.startDate)/this.timeLineBar.getSize().x;
 		var lastLeft = 0 ;
-		var lastTimestamp = albumToDisplay.obj.startDate ;
+		var lastTimestamp = albumToDisplay.startDate ;
 		var pictureWidth = albumToDisplay.picture.getStyle('width').toInt();
 		for(var i =0;i<albumToDisplay.pictures.length;i++) {
 			var picture = albumToDisplay.pictures[i];
 			var delta = Math.round((picture.timestamp-lastTimestamp)/ secPerPixel);
 			if(delta>pictureWidth) {
-				var left = Math.round((picture.timestamp-albumToDisplay.obj.startDate)/ secPerPixel);
+				var left = Math.round((picture.timestamp-albumToDisplay.startDate)/ secPerPixel);
 				lastTimestamp = picture.timestamp ;
 				var pictureDom = new Element('img', {'class': 'albumImg', width: "52px",  height: "38px", src: picture.thumbnailLink});
 				pictureDom.inject(albumToDisplay.dom, 'top');
