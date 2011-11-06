@@ -21,7 +21,7 @@ var Album = new Class({
 		this.vBar.inject(this.dom, 'top');
 		this.point.inject(this.dom, 'top');
 		this.picture.inject(this.dom, 'top');
-		this.picture.reflect({/* Put custom options here */});
+		//this.picture.reflect({/* Put custom options here */});
 		this.picture = this.dom.getFirst();
 	},
 	initEvents: function () {
