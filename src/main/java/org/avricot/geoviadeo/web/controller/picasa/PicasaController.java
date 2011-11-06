@@ -114,7 +114,7 @@ public class PicasaController {
 						}
 					});
 					album.setPhotosNumber(photoList.size());
-					album.setPhotos(photoList);
+					album.setPictures(photoList);
 					album.setStartDate(firstPhoto.getTime());
 					album.setEndDate(lastPhoto.getTime());
 					album.setId(firstPhoto.getTime() + lastPhoto.getTime());

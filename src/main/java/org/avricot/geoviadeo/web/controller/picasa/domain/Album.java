@@ -13,12 +13,12 @@ public class Album {
 	private Long endDate;
 	private List<Photo> pictures = new ArrayList<Photo>();
 
-	public List<Photo> getPhotos() {
+	public List<Photo> getPictures() {
 		return pictures;
 	}
 
-	public void setPhotos(List<Photo> photos) {
-		this.pictures = photos;
+	public void setPictures(List<Photo> pictures) {
+		this.pictures = pictures;
 	}
 
 	public String getDescription() {
