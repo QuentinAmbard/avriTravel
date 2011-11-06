@@ -16,33 +16,27 @@ var TimeLine = new Class({
 		//Move the cursor:
 		var that = this ;
 		var d = picture.timestamp -clockDate;
-		var left = Math.round(d/that.secPerPixel) +this.leftTimeLineBar;
+		var left = Math.round(d/that.secPerPixel) + this.cursor.getStyle('left').toInt();
 		this.cursor.set('morph', {duration: time});
 		this.cursor.morph({left: left});
 		
 		new TWEEN.Tween( {p: clockDate} ).to( { p: picture.timestamp}, time ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
 			setClock(Math.round(this.p));
 		}).onComplete(function () {return this;}).start();
-		//setTimeout(function () {that.moveToPicture(that.albumDisplayed.pictures[1], time);}, 3000);
 	},
 	init: function(albums) {
 		var dateMin = 9999999999999999999;
 		var dateMax = 0;
-		var totalLenght = 0;
 		for(var i =0;i<albums.length;i++) {
 			var dateMin = Math.min(dateMin, albums[i].startDate);
 			var dateMax = Math.max(dateMax, albums[i].endDate);
-			totalLenght += albums[i].endDate - albums[i].startDate
 		}
-		var secPerPixel = (dateMax - dateMin)/(this.timeLineBar.getSize().x-13); //13: mauvaise valeur, bug scroll ?
+		var secPerPixel = (dateMax - dateMin)/(this.timeLineBar.getSize().x);
 
 		for(var i =0;i<albums.length;i++) {
 			var album = new Album( albums[i], this.colors[i]);
 			var width = (albums[i].endDate - albums[i].startDate)/secPerPixel ;
-			console.log(albums[i].endDate - albums[i].startDate);
-			console.log("width"+width);
 			var left = (albums[i].startDate-dateMin)/secPerPixel;
-			console.log("left"+left);
 			this.injectAlbum(album, left, width);
 		}
 	},
@@ -121,7 +115,8 @@ var TimeLine = new Class({
 				(function (album) {
 					var d =0;
 					var lp =0;
-					var max = Math.max(album.width, that.rightTimeLineBar-album.left);
+					var max = album.dom.getStyle('left').toInt()-album.left+album.width;
+					console.log(max);
 					new TWEEN.Tween( {p: 0} ).to( { p: max }, 1500 ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
 						var d = this.p-lp;
 						lp = this.p;
@@ -153,7 +148,7 @@ var TimeLine = new Class({
 				lastTimestamp = picture.timestamp ;
 				var pictureDom = new Element('img', {'class': 'albumImg', width: "52px",  height: "38px", src: picture.thumbnailLink});
 				pictureDom.inject(albumToDisplay.dom, 'top');
-				pictureDom.reflect({/* Put custom options here */});
+				//pictureDom.reflect({/* Put custom options here */});
 				var t = albumToDisplay.dom.getFirst();
 				t.set('morph', {duration: 'long'});
 				t.morph({left: left});
@@ -162,7 +157,6 @@ var TimeLine = new Class({
 					t.addEvent('click', function (e) {
 						e.stop();
 						that.fireEvent('displayPicture', picture);
-						console.log(picture);
 					});
 				})(picture);
 				albumToDisplay.picturesDom.push(t);
@@ -218,10 +212,13 @@ var TimeLine = new Class({
 				album.dom.setStyle('width', newWidth) ;
 			}
 			if((way == 1 && left<album.left) || (way == -1 && left>album.left)) {
-				if(way == 1 )
+				if(way == 1 ) {
 					newLeft = Math.min(left+p*way, album.left);
-				else
+				}
+				else {
 					newLeft = Math.max(left+p*way, album.left);
+					console.log(newLeft+"("+album.left);
+				}
 				album.dom.setStyle('left', newLeft) ;
 			}
 		}
