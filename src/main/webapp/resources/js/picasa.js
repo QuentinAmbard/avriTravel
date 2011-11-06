@@ -8,7 +8,7 @@ function checkToken() {
 		method : 'get',
 		onSuccess : function(registered) {
 			if (registered.isRegistered) {
-				getAlbums();
+				hidePopUp();
 			} else {
 				console.log("Not Yet");
 				setTimeout("checkToken()", 2000);
@@ -30,6 +30,15 @@ function getAlbums() {
 		}
 	}).send();
 }
+
+function hidePopUp ( )
+  {
+     $('connect').fade().get('tween').chain(function () {
+     $('connect').setStyle('display', 'none');
+     });
+//      this.fireEvent('logged');
+
+  }
 
 var data = [{
                 "id": 2365361791000,

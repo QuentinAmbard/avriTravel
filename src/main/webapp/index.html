@@ -117,6 +117,16 @@
  	    	GB.geoTravel = geoTravel;
  	    	geoTravel.start();
 	    	
+ 	    	var jsonRequest = new Request.JSON({url: './server/redirect/test', 
+    			headers:{'Content-type':'application/json'},
+    			urlEncoded: false,
+    			onSuccess: function(registered){
+    				if(registered.isRegistered){
+    					hidePopUp();
+    				}
+    			}
+    		}).send();
+ 	    	
 	    	$('start3d').addEvent('click', function () {
 	    		var jsonRequest = new Request.JSON({url: './server/redirect/test', 
 	    			headers:{'Content-type':'application/json'},
@@ -124,10 +134,8 @@
 	    			onSuccess: function(registered){
 	    				if(registered.isRegistered){
 	    					hidePopUp();
-// 	    					getAlbums();
 	    				}else {
 	    					tokenWindow = window.open(registered.redirectUrl, 'AvriTravel', config='height=600, width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');
-	    					
 	    					setTimeout("checkToken()", 5000);
 	    				}
 	    			}
