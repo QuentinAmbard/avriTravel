@@ -62,7 +62,7 @@ var GeoUtils = new Class({
 	getInterpolatedVector : function(v1, v2, radius) {
 		radius = radius || this.radius ;
 		var distance = Math.sqrt(Math.pow((v1.x - v2.x) , 2) + Math.pow((v1.y - v2.y) , 2) + Math.pow((v1.z - v2.z) , 2));
-		var precision = Math.min(3,Math.floor(distance/50))+this.options.precision;
+		var precision = Math.min(5,Math.floor(distance/50))+this.options.precision;
 		vectors=[v1,v2];
 		for ( var k = 0; k < precision; k++) {
 			for ( var i = 1; i < vectors.length; i++) {

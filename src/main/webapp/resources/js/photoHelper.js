@@ -5,6 +5,7 @@ var PhotoHelper = new Class({
 	photos: new Array(),
 	allPhotos: new Array(),
 	lines: new Array(),
+	color: 0xFFFFFF,
 	initialize : function(avritravel, options) {
 		this.setOptions(options);
 		this.avritravel = avritravel;
@@ -59,7 +60,7 @@ var PhotoHelper = new Class({
 				if (j < points.length - 1) {
 					window.setTimeout(function() {
 						animate(points, j, color, lat1, lng1, lat2, lng2);
-					}, 50);
+					}, 70);
 				} else {
 					var lastPhoto = that.photos[that.photos.length-1];
 					that.avritravel.setGlobePosition(lastPhoto.lat, lastPhoto.lng);
@@ -80,7 +81,7 @@ var PhotoHelper = new Class({
 			var points = GB.geoUtils.getInterpolatedVector(v1, v2);
 			
 			//calculate the time to go to the next photo
-			timeLine.moveToPicture(currentPhoto, 1000+points.length*50);
+			timeLine.moveToPicture(currentPhoto, 1000+points.length*70);
 			
 			var that = this;
 			(function(points, j, lat1, lng1, lat2, lng2) {
@@ -110,6 +111,7 @@ var PhotoHelper = new Class({
 	},
 	
 	display: function(album) {
+		this.color = album.colorHexa;
 		this.allPhotos = album.pictures;
 		this.displayNextPhoto(0);
 	},
