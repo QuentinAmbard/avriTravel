@@ -32,8 +32,11 @@ var PhotoHelper = new Class({
 			var animate = function(points, j, color, lat1, lng1, lat2, lng2) {
 				
 				if(j==0){
-					that.avritravel.moveLinear = true;
-					that.avritravel.distanceTarget = 1000;
+					var distance = Math.sqrt( Math.pow(lat1-lat2,2) + Math.pow(lng1-lng2,2) );
+					if(distance > 8) {
+						that.avritravel.moveLinear = true;
+						that.avritravel.distanceTarget = 1000;
+					}
 				} else if(j > points.length /2){
 					that.avritravel.distanceTarget = 250;
 				}
