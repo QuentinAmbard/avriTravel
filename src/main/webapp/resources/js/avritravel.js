@@ -95,9 +95,10 @@ var GeoTravel = new Class({
 		var stars = new Stars();
 		this.scene.addChild(stars.particleSystem);
 		
-		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 300,0,0 )], 0xFF0000));
-		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 0,300,0 )], 0x00FF00));
-		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 0,0,300 )], 0x8888FF));
+//		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 300,0,0 )], 0xFF0000));
+//		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 0,300,0 )], 0x00FF00));
+//		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 0,0,300 )], 0x8888FF));
+		
 		//// TESTTTTTTTTTT
 		
 //		var locs = [40.71435, 	-74.00597,48.85661, 	2.35222,-33.87365, 	151.20689,-37.81319, 	144.96298,-14.23500, 	-51.92528,-43.53205, 	172.63623];
