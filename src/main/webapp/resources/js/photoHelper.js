@@ -71,6 +71,8 @@ var PhotoHelper = new Class({
 								that.displayNextPhoto(photoNumber+1);
 							} else {
 								lastPhoto.unShowPhoto();
+								timeLine.displayAllAlbum();
+								that.avritravel.distanceTarget = 600;
 							}
 						},3000);
 				}
@@ -81,12 +83,12 @@ var PhotoHelper = new Class({
 			var points = GB.geoUtils.getInterpolatedVector(v1, v2);
 			
 			//calculate the time to go to the next photo
-			timeLine.moveToPicture(currentPhoto, 1000+points.length*70);
+			timeLine.moveToPicture(currentPhoto, 1000+points.length*70+500);
 			
 			var that = this;
 			(function(points, j, lat1, lng1, lat2, lng2) {
 				setTimeout(function() {
-					animate(points, j, 0xFF0000, lat1, lng1, lat2, lng2);
+					animate(points, j, that.color, lat1, lng1, lat2, lng2);
 				}, 1000);
 			})(points, 0, lastPhoto.lat, lastPhoto.lng, lat, lng);
 			
@@ -111,12 +113,27 @@ var PhotoHelper = new Class({
 	},
 	
 	display: function(album) {
+		this.resetMap();
 		this.color = album.colorHexa;
 		this.allPhotos = album.pictures;
 		this.displayNextPhoto(0);
 	},
 	
-	pause: function(){
+	pause: function() {
 		
+	},
+	
+	resetMap: function() {
+		var size = this.lines.length;
+		for(var i=0; i<size; i++) {
+			this.avritravel.scene.removeChild(this.lines.pop());
+		}
+		
+		size = this.photos.length;
+		for(var i=0; i<size; i++) {
+			this.avritravel.scene.removeChild(this.photos.pop().photoObject3d);
+		}
+		
+		this.allPhotos = new Array();
 	}
 });
