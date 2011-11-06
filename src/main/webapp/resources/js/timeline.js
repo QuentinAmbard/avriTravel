@@ -26,9 +26,24 @@ var TimeLine = new Class({
 		//setTimeout(function () {that.moveToPicture(that.albumDisplayed.pictures[1], time);}, 3000);
 	},
 	init: function(albums) {
+		var dateMin = 9999999999999999999;
+		var dateMax = 0;
+		var totalLenght = 0;
+		for(var i =0;i<albums.length;i++) {
+			var dateMin = Math.min(dateMin, albums[i].startDate);
+			var dateMax = Math.max(dateMax, albums[i].endDate);
+			totalLenght += albums[i].endDate - albums[i].startDate
+		}
+		var secPerPixel = (dateMax - dateMin)/(this.timeLineBar.getSize().x-13); //13: mauvaise valeur, bug scroll ?
+
 		for(var i =0;i<albums.length;i++) {
 			var album = new Album( albums[i], this.colors[i]);
-			this.injectAlbum(album, 100, 100);
+			var width = (albums[i].endDate - albums[i].startDate)/secPerPixel ;
+			console.log(albums[i].endDate - albums[i].startDate);
+			console.log("width"+width);
+			var left = (albums[i].startDate-dateMin)/secPerPixel;
+			console.log("left"+left);
+			this.injectAlbum(album, left, width);
 		}
 	},
 	injectAlbum: function (album, left, width) {
@@ -142,6 +157,14 @@ var TimeLine = new Class({
 				var t = albumToDisplay.dom.getFirst();
 				t.set('morph', {duration: 'long'});
 				t.morph({left: left});
+				var that = this ;
+				(function (picture) {
+					t.addEvent('click', function (e) {
+						e.stop();
+						that.fireEvent('displayPicture', picture);
+						console.log(picture);
+					});
+				})(picture);
 				albumToDisplay.picturesDom.push(t);
 			}
 		}

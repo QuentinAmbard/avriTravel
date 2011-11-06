@@ -252,9 +252,11 @@ input.field {
 	border-radius: 10px; 
 	-moz-border-radius: 10px; 
 	-webkit-border-radius: 10px; 
+	opacity: 0.8;
 	text-align: left;
 }
 .album {
+	opacity: 1 !important;
 	font-family: AngelinaRegular, sans-serif;
 	-webkit-transform: rotate(-40deg); 
 	-moz-transform: rotate(-40deg);
