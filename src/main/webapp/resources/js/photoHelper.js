@@ -66,8 +66,10 @@ var PhotoHelper = new Class({
 					lastPhoto.showPhoto();
 					that.avritravel.moveLinear = false;
 					setTimeout(function(){
-							if(photoNumber < that.allPhotos.length) {
+							if(photoNumber + 1 < that.allPhotos.length) {
 								that.displayNextPhoto(photoNumber+1);
+							} else {
+								lastPhoto.unShowPhoto();
 							}
 						},3000);
 				}
