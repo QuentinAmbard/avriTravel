@@ -112,7 +112,9 @@ var PhotoHelper = new Class({
 	},
 	
 	display: function(album) {
-		this.pause();
+		if (this.timer) {
+			clearTimeout(this.timer);
+		}
 		this.resetMap();
 		this.color = album.colorHexa;
 		this.allPhotos = album.pictures;
