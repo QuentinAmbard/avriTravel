@@ -7,14 +7,43 @@ var TimeLine = new Class({
 	initialize: function(options){
 		this.timeLineBar = $('timeLineBar') ;
 		this.timeLine = $('timeLine') ;
+		this.cursor = $('cursor');
 		this.leftTimeLineBar = this.timeLineBar.getPosition().x ;
 		this.rightTimeLineBar = this.timeLineBar.getPosition().x+this.timeLineBar.getSize().x ;
 	},
 	colors: ["#d637d6", "#d63a3a", "#7d66ed", "#d637d6", "#d63a3a", "#7d66ed"],
+	moveToPicture: function (picture, time) {
+		//Move the cursor:
+		var that = this ;
+		var d = picture.timestamp -clockDate;
+		var left = Math.round(d/that.secPerPixel) +this.leftTimeLineBar;
+		this.cursor.set('morph', {duration: time});
+		this.cursor.morph({left: left});
+		
+		new TWEEN.Tween( {p: clockDate} ).to( { p: picture.timestamp}, time ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
+			setClock(Math.round(this.p));
+		}).onComplete(function () {return this;}).start();
+		//setTimeout(function () {that.moveToPicture(that.albumDisplayed.pictures[1], time);}, 3000);
+	},
 	init: function(albums) {
+		var dateMin = 9999999999999999999;
+		var dateMax = 0;
+		var totalLenght = 0;
+		for(var i =0;i<albums.length;i++) {
+			var dateMin = Math.min(dateMin, albums[i].startDate);
+			var dateMax = Math.max(dateMax, albums[i].endDate);
+			totalLenght += albums[i].endDate - albums[i].startDate
+		}
+		var secPerPixel = (dateMax - dateMin)/(this.timeLineBar.getSize().x-13); //13: mauvaise valeur, bug scroll ?
+
 		for(var i =0;i<albums.length;i++) {
 			var album = new Album( albums[i], this.colors[i]);
-			this.injectAlbum(album, 100, 100);
+			var width = (albums[i].endDate - albums[i].startDate)/secPerPixel ;
+			console.log(albums[i].endDate - albums[i].startDate);
+			console.log("width"+width);
+			var left = (albums[i].startDate-dateMin)/secPerPixel;
+			console.log("left"+left);
+			this.injectAlbum(album, left, width);
 		}
 	},
 	injectAlbum: function (album, left, width) {
@@ -37,6 +66,7 @@ var TimeLine = new Class({
 	status: 0,
 	albumDisplayed: null,
 	displayAllAlbum: function () {
+		this.cursor.fade(0);
 		this.status=-1;
 		var that = this;
 		//Hide pictures
@@ -101,21 +131,25 @@ var TimeLine = new Class({
 			}
 		}
 	},
+	secPerPixel: 10,
 	displayAlbum: function (albumToDisplay) {
+		this.cursor.setStyle('left', this.leftTimeLineBar);
+		this.cursor.fade(1);
+		setClock(albumToDisplay.startDate);
 		this.fireEvent("displayAlbum", albumToDisplay);
 		this.albumDisplayed = albumToDisplay;
 		this.status = 2 ;
 		
 		//Display images:
-		var secPerPixel = (albumToDisplay.endDate-albumToDisplay.startDate)/this.timeLineBar.getSize().x;
+		this.secPerPixel = (albumToDisplay.endDate-albumToDisplay.startDate)/this.timeLineBar.getSize().x;
 		var lastLeft = 0 ;
 		var lastTimestamp = albumToDisplay.startDate ;
 		var pictureWidth = albumToDisplay.picture.getStyle('width').toInt();
 		for(var i =0;i<albumToDisplay.pictures.length;i++) {
 			var picture = albumToDisplay.pictures[i];
-			var delta = Math.round((picture.timestamp-lastTimestamp)/ secPerPixel);
+			var delta = Math.round((picture.timestamp-lastTimestamp)/ this.secPerPixel);
 			if(delta>pictureWidth) {
-				var left = Math.round((picture.timestamp-albumToDisplay.startDate)/ secPerPixel);
+				var left = Math.round((picture.timestamp-albumToDisplay.startDate)/ this.secPerPixel);
 				lastTimestamp = picture.timestamp ;
 				var pictureDom = new Element('img', {'class': 'albumImg', width: "52px",  height: "38px", src: picture.thumbnailLink});
 				pictureDom.inject(albumToDisplay.dom, 'top');
@@ -123,6 +157,14 @@ var TimeLine = new Class({
 				var t = albumToDisplay.dom.getFirst();
 				t.set('morph', {duration: 'long'});
 				t.morph({left: left});
+				var that = this ;
+				(function (picture) {
+					t.addEvent('click', function (e) {
+						e.stop();
+						that.fireEvent('displayPicture', picture);
+						console.log(picture);
+					});
+				})(picture);
 				albumToDisplay.picturesDom.push(t);
 			}
 		}

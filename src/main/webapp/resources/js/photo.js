@@ -7,25 +7,28 @@ var Photo = new Class({
 	pictureObject3d: null,
 	lat: 0,
 	lng: 0,
-	initialize: function(lat, lng, imageUrl, options){
+	initialize: function(photo, options){
 		this.setOptions(options);
-		this.lat = lat;
-		this.lng = lng;
+		this.lat = photo.latlng.lat;
+		this.lng = photo.latlng.lng;
 		
+		var ratio = photo.width / photo.height;
+		var photoHeight = 20;
+		var photoWidth = Math.round(photoHeight * ratio);
 		
 		this.photoObject3d =  new THREE.Mesh (
-				new THREE.SphereGeometry( 1, 1),
-				new THREE.MeshBasicMaterial( { color: 0xFFFFFF, opacity:1 } )
+				new THREE.SphereGeometry(0,0),
+				new THREE.MeshBasicMaterial( { color: 0xFFFFFF, opacity:0 } )
 		);
-		this.photoObject3d.position = GB.geoUtils.getVector3D(lat, lng, 210);
+		this.photoObject3d.position = GB.geoUtils.getVector3D(this.lat, this.lng, 210);
 		this.photoObject3d.useQuaternion  = true;
-		var v = new THREE.Vector3(-lat*2,  -90*2+lng*2, 0);
+		var v = new THREE.Vector3(-this.lat*2,  -90*2+this.lng*2, 0);
 		var quaternion = new THREE.Quaternion ();
 		quaternion.setFromEuler(v);
 		this.photoObject3d.quaternion = quaternion;
 		
 		this.bgObject3d = new THREE.Mesh(
-				new THREE.PlaneGeometry( 32, 20),
+				new THREE.PlaneGeometry( photoWidth+1, photoHeight+1),
 				new THREE.MeshBasicMaterial( { color: 0xFFFFFF, opacity:1 } )
 				);
 		
@@ -35,10 +38,10 @@ var Photo = new Class({
 		this.bgObject3d.useQuaternion = true;
 		
 		this.pictureObject3d = new THREE.Mesh(
-			new THREE.PlaneGeometry( 31, 19),
+			new THREE.PlaneGeometry( photoWidth, photoHeight),
 			new THREE.MeshLambertMaterial( {
 				/*shading: THREE.SmoothShading,*/
-				map: THREE.ImageUtils.loadTexture( "resources/images/photosample.jpg" )
+				map: THREE.ImageUtils.loadTexture( photo.normalLink )
 				})
 			);
 		this.pictureObject3d.position.x = 0;

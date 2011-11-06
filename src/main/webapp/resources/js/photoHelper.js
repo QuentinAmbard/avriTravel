@@ -3,20 +3,30 @@ var PhotoHelper = new Class({
 	options : {},
 	avritravel : null,
 	photos: new Array(),
+	allPhotos: new Array(),
 	lines: new Array(),
 	initialize : function(avritravel, options) {
 		this.setOptions(options);
 		this.avritravel = avritravel;
+		var that = this;
+		timeLine.addEvent("displayAlbum", function(album){
+				that.display(album);
+			});
 	},
 
-	addPhoto : function(lat, lng, imageUrl) {
-		var newPhoto = new Photo(lat,lng,imageUrl);
+	addPhoto : function(currentPhoto) {
+		var newPhoto = new Photo(currentPhoto);
 		this.avritravel.scene.addObject(newPhoto.photoObject3d);
 		
 		this.photos.push(newPhoto);
 	},
 	
-	displayNextPhoto: function (lat, lng, imageUrl) {
+	displayNextPhoto: function (photoNumber) {
+		
+		var currentPhoto = this.allPhotos[photoNumber];
+		var lat = currentPhoto.latlng.lat;
+		var lng = currentPhoto.latlng.lng;
+		
 		if(this.photos.length != 0) {
 			
 			var animate = function(points, j, color, lat1, lng1, lat2, lng2) {
@@ -28,12 +38,13 @@ var PhotoHelper = new Class({
 					that.avritravel.distanceTarget = 250;
 				}
 				
-				//var latTmp = (lat1*(points.length-j)+(lat2*j))/points.length;
-				//var lngTmp = (lng1*(points.length-j)+(lng2*j))/points.length;
-				//that.avritravel.setGlobePosition(latTmp, lngTmp);
+				var latTmp = (lat1*(points.length-j)+(lat2*j))/points.length;
+				var lngTmp = (lng1*(points.length-j)+(lng2*j))/points.length;
+				that.avritravel.setGlobePosition(latTmp, lngTmp);
 				
-				var geolocTmp = GB.geoUtils.geGeoFromVector3D(points[j]);
-				that.avritravel.setGlobePosition(geolocTmp[0], geolocTmp[1]);
+
+				// var geolocTmp = GB.geoUtils.geGeoFromVector3D(points[j]);
+				// that.avritravel.setGlobePosition(geolocTmp[0], geolocTmp[1]);
 				
 				var p = [ points[j], points[j + 1] ];
 				var line = GB.geoUtils.getLine(p, color);
@@ -51,6 +62,11 @@ var PhotoHelper = new Class({
 					that.avritravel.setGlobePosition(lastPhoto.lat, lastPhoto.lng);
 					lastPhoto.showPhoto();
 					that.avritravel.moveLinear = false;
+					setTimeout(function(){
+							if(photoNumber < that.allPhotos.length) {
+								that.displayNextPhoto(photoNumber+1);
+							}
+						},3000);
 				}
 			};
 			var lastPhoto = this.photos[this.photos.length-1];
@@ -74,9 +90,19 @@ var PhotoHelper = new Class({
 			var that = this;
 			setTimeout(function(){
 				that.photos[that.photos.length-1].showPhoto();
+				setTimeout(function(){
+					if(photoNumber < that.allPhotos.length) {
+						that.displayNextPhoto(photoNumber+1);
+					}
+				},3000);
 			} , 1000);
 		}
 		
-		this.addPhoto(lat,lng,imageUrl);	
+		this.addPhoto(currentPhoto);	
+	},
+	
+	display: function(album) {
+		this.allPhotos = album.pictures;
+		this.displayNextPhoto(0);
 	}
 });
