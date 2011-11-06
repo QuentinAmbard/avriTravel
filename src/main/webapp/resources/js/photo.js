@@ -20,7 +20,7 @@ var Photo = new Class({
 				new THREE.SphereGeometry(0,0),
 				new THREE.MeshBasicMaterial( { color: 0xFFFFFF, opacity:0 } )
 		);
-		this.photoObject3d.position = GB.geoUtils.getVector3D(this.lat, this.lng, 210);
+		this.photoObject3d.position = GB.geoUtils.getVector3D(this.lat, this.lng, 205+(Math.random()*20/10));
 		this.photoObject3d.useQuaternion  = true;
 		var v = new THREE.Vector3(-this.lat*2,  -90*2+this.lng*2, 0);
 		var quaternion = new THREE.Quaternion ();
@@ -34,7 +34,7 @@ var Photo = new Class({
 		
 		this.bgObject3d.position.x = 0;
 		this.bgObject3d.position.y = 0;
-		this.bgObject3d.position.z = 0;//10;
+		this.bgObject3d.position.z = 4;//10;
 		this.bgObject3d.useQuaternion = true;
 		
 		this.pictureObject3d = new THREE.Mesh(

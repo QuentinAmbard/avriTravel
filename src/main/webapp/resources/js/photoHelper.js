@@ -74,6 +74,9 @@ var PhotoHelper = new Class({
 			var v2 = GB.geoUtils.getVector3D(lat, lng);
 			var points = GB.geoUtils.getInterpolatedVector(v1, v2);
 			
+			//calculate the time to go to the next photo
+			timeLine.fireEvent("nextPhoto", [currentPhoto, 1000+points.length*50]);
+			
 			var that = this;
 			(function(points, j, lat1, lng1, lat2, lng2) {
 				setTimeout(function() {
@@ -104,5 +107,9 @@ var PhotoHelper = new Class({
 	display: function(album) {
 		this.allPhotos = album.pictures;
 		this.displayNextPhoto(0);
+	},
+	
+	pause: function(){
+		
 	}
 });
