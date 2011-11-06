@@ -72,6 +72,7 @@ var TimeLine = new Class({
 	displayAllAlbum: function () {
 		if(this.albumDisplayed!=null) {
 			this.cursor.fade(0);
+			this.cursor.get('morph').stop();
 			this.status=-1;
 			var that = this;
 			//Hide pictures

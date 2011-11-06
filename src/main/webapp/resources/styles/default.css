@@ -219,7 +219,8 @@ input.field {
 	position: absolute;
 	width: 20px;	
 	height: 20px;
-	background-color: red;
+	top: -1px;
+	background:	url(../images/cursor.png) no-repeat;
 	left: 200px;
 	opacity: 0;
 	z-index: 99999;
@@ -237,7 +238,7 @@ input.field {
 	margin: auto;
 }
 #timeLineBar {
-	background-color: #5c4d4d ;
+	background:	url(../images/arrow.png) right #5c4d4d ;
 	height: 15px;
 	border-radius: 10px; 
 	-moz-border-radius: 10px; 
