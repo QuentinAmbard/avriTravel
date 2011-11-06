@@ -11,9 +11,13 @@ var PhotoHelper = new Class({
 		this.setOptions(options);
 		this.avritravel = avritravel;
 		var that = this;
+		
 		timeLine.addEvent("displayAlbum", function(album){
 				that.display(album);
 			});
+		timeLine.addEvent("hideAlbum", function(){
+			that.pause();
+		});
 	},
 
 	addPhoto : function(currentPhoto) {

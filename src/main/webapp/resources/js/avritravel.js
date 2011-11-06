@@ -164,6 +164,7 @@ var GeoTravel = new Class({
 	},
 	onMouseMove : function(event) {
 		if (this.mouseUp) {
+			this.photoHelper.pause();
 			this.mouse.x = -event.clientX;
 			this.mouse.y = event.clientY;
 
@@ -184,6 +185,7 @@ var GeoTravel = new Class({
 		this.mouseUp = false;
 	},
 	onMouseWheel : function(event) {
+		this.photoHelper.pause();
 		if ('wheelDelta' in event) {
 			rolled = event.wheelDelta;// event.wheelDeltaY;//
 		} else {
