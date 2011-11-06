@@ -40,18 +40,13 @@ var TimeLine = new Class({
 			var width = (albums[i].endDate - albums[i].startDate)/secPerPixel ;
 			var delta = (width-widthMin);
 			var left = (albums[i].startDate-dateMin)/secPerPixel;
-			console.log(left);
 			if(delta<0) {
 				width = widthMin ;
-				console.log(i);
-				console.log(albums[i].title)
 				if(left>this.leftTimeLineBar) {
-					console.log(delta);
 					left+=delta;
 					
 				}
 			}
-			console.log(left);
 			this.injectAlbum(album, left, width);
 		}
 	},
@@ -75,69 +70,70 @@ var TimeLine = new Class({
 	status: 0,
 	albumDisplayed: null,
 	displayAllAlbum: function () {
-		this.cursor.fade(0);
-		this.status=-1;
-		var that = this;
-		//Hide pictures
-		for(var i =0;i<that.albumDisplayed.picturesDom.length;i++) {
-			var pict = that.albumDisplayed.picturesDom[i];
-			pict.set('morph', {duration: 'long'});
-			pict.get('morph').chain(function () {
-				this.element.dispose();
-			});
-			pict.morph({left: 0});
-		}
-		
-		var max = that.albumDisplayed.dom.getSize().x-that.albumDisplayed.width;
-		for (var i=0;i<that.albums.length;i++) {
-			var album = that.albums[i];
-			if(that.albumDisplayed.id == album.id) {
-				(function (album) {
-					var d =0;
-					var lp =0;
-					new TWEEN.Tween( {p: 0} ).to( { p: max }, 2000 ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
-						var d = this.p-lp;
-						lp = this.p;
-						var left = Number.from(album.dom.getStyle('left'));
-						var width = Number.from(album.dom.getStyle('width'));
-						
-						var newLeft = left+d ;
-						var newWidth= width-d ;
-						if(newLeft<album.left) {
-							album.dom.setStyle('left', newLeft);
-							newWidth = newWidth- d ;
-						} else {
-							album.dom.setStyle('left', album.left);
-						}
-						if(newWidth<=album.width) {
-							newWidth = album.width;
-						} 
-						album.dom.setStyle('width', newWidth);
-					}).onComplete(function () {that.status = 0; return this;}).start();
-				})(album);
-			} else if(album.left<that.albumDisplayed.left) {
-				(function (album) {
-					var d =0;
-					var lp =0;
-					var max = Math.max(album.width, album.left-that.leftTimeLineBar);
-					new TWEEN.Tween( {p: 0} ).to( { p: max }, 1500 ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
-						var d = this.p-lp;
-						lp = this.p;
-						that.moveToReverse(album, d, 1, 0, that.leftTimeLineBar);
-					}).onComplete(function () {that.status = 0; return this;}).start();
-				})(album);
-			} else {
-				(function (album) {
-					var d =0;
-					var lp =0;
-					var max = album.dom.getStyle('left').toInt()-album.left+album.width;
-					console.log(max);
-					new TWEEN.Tween( {p: 0} ).to( { p: max }, 1500 ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
-						var d = this.p-lp;
-						lp = this.p;
-						that.moveToReverse(album, d, -1, that.rightTimeLineBar);
-					}).onComplete(function () {that.status = 0; return this;}).start();
-				})(album);
+		if(this.albumDisplayed!=null) {
+			this.cursor.fade(0);
+			this.status=-1;
+			var that = this;
+			//Hide pictures
+			for(var i =0;i<that.albumDisplayed.picturesDom.length;i++) {
+				var pict = that.albumDisplayed.picturesDom[i];
+				pict.set('morph', {duration: 'long'});
+				pict.get('morph').chain(function () {
+					this.element.dispose();
+				});
+				pict.morph({left: 0});
+			}
+			
+			var max = that.albumDisplayed.dom.getSize().x-that.albumDisplayed.width;
+			for (var i=0;i<that.albums.length;i++) {
+				var album = that.albums[i];
+				if(that.albumDisplayed.id == album.id) {
+					(function (album) {
+						var d =0;
+						var lp =0;
+						new TWEEN.Tween( {p: 0} ).to( { p: max }, 2000 ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
+							var d = this.p-lp;
+							lp = this.p;
+							var left = Number.from(album.dom.getStyle('left'));
+							var width = Number.from(album.dom.getStyle('width'));
+							
+							var newLeft = left+d ;
+							var newWidth= width-d ;
+							if(newLeft<album.left) {
+								album.dom.setStyle('left', newLeft);
+								newWidth = newWidth- d ;
+							} else {
+								album.dom.setStyle('left', album.left);
+							}
+							if(newWidth<=album.width) {
+								newWidth = album.width;
+							} 
+							album.dom.setStyle('width', newWidth);
+						}).onComplete(function () {that.status = 0; return this;}).start();
+					})(album);
+				} else if(album.left<that.albumDisplayed.left) {
+					(function (album) {
+						var d =0;
+						var lp =0;
+						var max = Math.max(album.width, album.left-that.leftTimeLineBar);
+						new TWEEN.Tween( {p: 0} ).to( { p: max }, 1500 ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
+							var d = this.p-lp;
+							lp = this.p;
+							that.moveToReverse(album, d, 1, 0, that.leftTimeLineBar);
+						}).onComplete(function () {that.status = 0; return this;}).start();
+					})(album);
+				} else {
+					(function (album) {
+						var d =0;
+						var lp =0;
+						var max = album.dom.getStyle('left').toInt()-album.left+album.width;
+						new TWEEN.Tween( {p: 0} ).to( { p: max }, 1500 ).easing( TWEEN.Easing.Quadratic.EaseInOut ).onUpdate( function() {
+							var d = this.p-lp;
+							lp = this.p;
+							that.moveToReverse(album, d, -1, that.rightTimeLineBar);
+						}).onComplete(function () {that.status = 0; return this;}).start();
+					})(album);
+				}
 			}
 		}
 	},
@@ -239,7 +235,6 @@ var TimeLine = new Class({
 				}
 				else {
 					newLeft = Math.max(left+p*way, album.left);
-					console.log(newLeft+"("+album.left);
 				}
 				album.dom.setStyle('left', newLeft) ;
 			}
