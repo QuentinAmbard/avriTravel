@@ -6,6 +6,7 @@ var PhotoHelper = new Class({
 	allPhotos: new Array(),
 	lines: new Array(),
 	color: 0xFFFFFF,
+	timer: null,
 	initialize : function(avritravel, options) {
 		this.setOptions(options);
 		this.avritravel = avritravel;
@@ -58,7 +59,7 @@ var PhotoHelper = new Class({
 				that.avritravel.scene.addObject(line);
 				j++;
 				if (j < points.length - 1) {
-					window.setTimeout(function() {
+					that.timer = window.setTimeout(function() {
 						animate(points, j, color, lat1, lng1, lat2, lng2);
 					}, 70);
 				} else {
@@ -66,7 +67,7 @@ var PhotoHelper = new Class({
 					that.avritravel.setGlobePosition(lastPhoto.lat, lastPhoto.lng);
 					lastPhoto.showPhoto();
 					that.avritravel.moveLinear = false;
-					setTimeout(function(){
+					that.timer = setTimeout(function(){
 							if(photoNumber + 1 < that.allPhotos.length) {
 								that.displayNextPhoto(photoNumber+1);
 							} else {
@@ -87,9 +88,7 @@ var PhotoHelper = new Class({
 			
 			var that = this;
 			(function(points, j, lat1, lng1, lat2, lng2) {
-				setTimeout(function() {
-					animate(points, j, that.color, lat1, lng1, lat2, lng2);
-				}, 1000);
+				animate(points, j, that.color, lat1, lng1, lat2, lng2);
 			})(points, 0, lastPhoto.lat, lastPhoto.lng, lat, lng);
 			
 			lastPhoto.unShowPhoto();
@@ -99,9 +98,9 @@ var PhotoHelper = new Class({
 			this.avritravel.setGlobePosition(lat, lng);
 			
 			var that = this;
-			setTimeout(function(){
+			that.timer = setTimeout(function(){
 				that.photos[that.photos.length-1].showPhoto();
-				setTimeout(function(){
+				that.timer = setTimeout(function(){
 					if(photoNumber < that.allPhotos.length) {
 						that.displayNextPhoto(photoNumber+1);
 					}
@@ -119,8 +118,12 @@ var PhotoHelper = new Class({
 		this.displayNextPhoto(0);
 	},
 	
-	pause: function() {
-		
+
+	pause : function() {
+		if (this.timer) {
+			clearTimeout(this.timer);
+		}
+		timeLine.displayAllAlbum();
 	},
 	
 	resetMap: function() {
