@@ -12,7 +12,7 @@ var TimeLine = new Class({
 		this.rightTimeLineBar = this.timeLineBar.getPosition().x+this.timeLineBar.getSize().x ;
 	},
 	colors: ["#d63a3a", "#6445ff", "#5ade21", "#edea26", "#31f5f5", "#7d66ed", "#6445ff", "#5ade21", "#edea26", "#31f5f5", "#7d66ed", "#6445ff", "#5ade21", "#edea26", "#31f5f5", "#7d66ed"],
-	colorsHexa: [0xd637d6, 0xd63a3a, 0x7d66ed, 0xd637d6, 0xd63a3a, 0x7d66ed],
+	colorsHexa: [0xd63a3a, 0x6445ff, 0x5ade21, 0xedea26, 0x31f5f5, 0x7d66ed, 0x6445ff, 0x5ade21, 0xedea26, 0x31f5f5, 0x7d66ed, 0x6445ff],
 	moveToPicture: function (picture, time) {
 		//Move the cursor:
 		var that = this ;
@@ -33,11 +33,25 @@ var TimeLine = new Class({
 			var dateMax = Math.max(dateMax, albums[i].endDate);
 		}
 		var secPerPixel = (dateMax - dateMin)/(this.timeLineBar.getSize().x);
-
+		
+		var widthMin = 60;
 		for(var i =0;i<albums.length;i++) {
 			var album = new Album( albums[i], this.colors[i], this.colorsHexa[i]);
-			var width = Math.max(50,(albums[i].endDate - albums[i].startDate)/secPerPixel) ;
+			var width = (albums[i].endDate - albums[i].startDate)/secPerPixel ;
+			var delta = (width-widthMin);
 			var left = (albums[i].startDate-dateMin)/secPerPixel;
+			console.log(left);
+			if(delta<0) {
+				width = widthMin ;
+				console.log(i);
+				console.log(albums[i].title)
+				if(left>this.leftTimeLineBar) {
+					console.log(delta);
+					left+=delta;
+					
+				}
+			}
+			console.log(left);
 			this.injectAlbum(album, left, width);
 		}
 	},
