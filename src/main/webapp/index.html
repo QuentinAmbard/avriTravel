@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-	<meta name="description" content="avriGeo - Find your connections around the world">
-	<title>avriGeo</title>
+	<meta name="description" content="AvriTravel, see your travel pictures around the world and in time">
+	<title>avriTravel</title>
 	<link href="./resources/styles/default.css" rel="stylesheet" type="text/css" />
 	<link href="./resources/styles/clock.css" rel="stylesheet" type="text/css" />
 	<script type="text/javascript" src="./resources/js/mootools.js"></script>
@@ -88,8 +88,10 @@
 
 <div id="connect"> 
 	<h1>AvriTravel</h1> 
-	<p> Travel through the world and through time thanks to AvriTravel</p> 
-	<div style="float:right;padding:10px;padding-right:30px;">
+	<p> You don't like seing your Picasa albums in an old web application ?<br />
+	See them in avriTravel, in a 3D view of the globe with the details of place and time</p> 
+
+	<div style="float:right;padding:10px;padding-right:30px;width:180px;">
 		<input id="start3d" type="submit" value="Start3D" class="Start3D callToaction"/><br /> 
 		(Requires a Picasa account)
 	</div>
@@ -111,13 +113,19 @@
   } 
   var timeLine;
   
+
+  window.addEventListener('resize', function () {
+  	$('footer').setStyle('bottom', 0);
+  	$('hackFb').setStyle('bottom', 4);
+  }, false);
+  
    window.addEvent('domready', function() {
 	    if(Detector.webgl){
 	    	timeLine = new TimeLine();
 	    	TWEEN.start();
- 	    	var geoTravel = new GeoTravel('container');
- 	    	GB.geoTravel = geoTravel;
- 	    	geoTravel.start();
+//  	    	var geoTravel = new GeoTravel('container');
+//  	    	GB.geoTravel = geoTravel;
+//  	    	geoTravel.start();
 	    	
  	    	var jsonRequest = new Request.JSON({url: './server/redirect/test', 
     			headers:{'Content-type':'application/json'},
@@ -149,8 +157,8 @@
     });
    
     window.setTimeout(function() {
-
-// 	    $('footerEl').fade(0.6);
+    	$('footerEl').fade(0.6);
+	    $('footerEl').fade(0.6);
 	}, 5000);
     
   </script>
@@ -169,12 +177,12 @@
 	</div>
   </div>
   
-<!--
+
 <footer id="footerEl" >
 	<div id="footer">
-		<a href="http://serv.avricot.com">AvriGeo</a>, WebGL & server by <a href="http://www.avricot.com" target="_blank">Quentin Ambard</a> & <a href="http://www.viadeo.com/profile/002ud7dupkmtum0?language=fr&nav=0&navContext=002uk5ji3mpgy1n" target="_blank">Matthieu Mouminoux</a>, Html/Css by <a href="http://www.viadeo.com/profile/00221fmbgp0u9u4b&amp;language=fr?ga_from=Fu:%2Fprofil%2Fdisplay%2Findex.jsp;Fb%3Amininews%3BFe%3AMN-name-L2%3BMNType%3A8%3B" target="_blank">Vincent Hue</a> | <a href="http://www.avricot.com" target="_blank">www.avricot.com</a> | <a href="http://www.avricot.com/blog/index.php?contact&idMenu=avriMenu5" target="_blank">contact</a>
+		<a href="http://serv.avricot.com">AvriTravel</a>, by <a href="http://www.avricot.com" target="_blank">Quentin Ambard</a>, <a href="http://www.viadeo.com/profile/002ud7dupkmtum0?language=fr&nav=0&navContext=002uk5ji3mpgy1n" target="_blank">Matthieu Mouminoux</a> & <a href="http://www.julienvey.com" target="_blank">Julien Vey</a> | <a href="http://www.avricot.com" target="_blank">www.avricot.com</a> | <a href="http://www.avricot.com/blog/index.php?contact&idMenu=avriMenu5" target="_blank">contact</a>
 		&nbsp;&nbsp;&nbsp;<g:plusone size="medium"></g:plusone>
-		<a href="https://twitter.com/share" class="twitter-share-button" data-text="Whooa ! Social 3D connections visualization using WebGL #AvriGeo" data-count="horizontal" data-via="avricot">Tweet</a>
+		<a href="https://twitter.com/share" class="twitter-share-button" data-text="Whooa ! 3D Travel visualization using WebGL #AvriTravel" data-count="horizontal" data-via="avricot">Tweet</a>
 	</div>
 	<div id="hackFb">
 		<div style="margin-bottom:10px" class="fb-like" data-href="serv.avricot.com" data-send="true" data-layout="button_count" data-width="50" data-show-faces="true" data-colorscheme="dark"></div></div>
@@ -212,7 +220,6 @@
   })();
 
 </script>
-  -->
 
 </body> 
 </html>	
