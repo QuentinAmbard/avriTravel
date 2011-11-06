@@ -9,6 +9,7 @@ function checkToken() {
 		onSuccess : function(registered) {
 			if (registered.isRegistered) {
 				hidePopUp();
+				getAlbums();
 			} else {
 				console.log("Not Yet");
 				setTimeout("checkToken()", 2000);

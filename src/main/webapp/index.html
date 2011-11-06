@@ -114,7 +114,6 @@
    window.addEvent('domready', function() {
 	    if(Detector.webgl){
 	    	timeLine = new TimeLine();
-	    	timeLine.init(data);
 	    	TWEEN.start();
  	    	var geoTravel = new GeoTravel('container');
  	    	GB.geoTravel = geoTravel;
@@ -126,6 +125,7 @@
     			onSuccess: function(registered){
     				if(registered.isRegistered){
     					hidePopUp();
+    					getAlbums();
     				}
     			}
     		}).send();
@@ -137,6 +137,7 @@
 	    			onSuccess: function(registered){
 	    				if(registered.isRegistered){
 	    					hidePopUp();
+	    					getAlbums();
 	    				}else {
 	    					tokenWindow = window.open(registered.redirectUrl, 'AvriTravel', config='height=600, width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');
 	    					setTimeout("checkToken()", 5000);
