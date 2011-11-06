@@ -11,7 +11,8 @@ var TimeLine = new Class({
 		this.leftTimeLineBar = this.timeLineBar.getPosition().x ;
 		this.rightTimeLineBar = this.timeLineBar.getPosition().x+this.timeLineBar.getSize().x ;
 	},
-	colors: ["#d637d6", "#d63a3a", "#7d66ed", "#d637d6", "#d63a3a", "#7d66ed"],
+	colors: ["#d63a3a", "#6445ff", "#5ade21", "#edea26", "#31f5f5", "#7d66ed", "#6445ff", "#5ade21", "#edea26", "#31f5f5", "#7d66ed", "#6445ff", "#5ade21", "#edea26", "#31f5f5", "#7d66ed"],
+	colorsHexa: [0xd637d6, 0xd63a3a, 0x7d66ed, 0xd637d6, 0xd63a3a, 0x7d66ed],
 	moveToPicture: function (picture, time) {
 		//Move the cursor:
 		var that = this ;
@@ -34,7 +35,7 @@ var TimeLine = new Class({
 		var secPerPixel = (dateMax - dateMin)/(this.timeLineBar.getSize().x);
 
 		for(var i =0;i<albums.length;i++) {
-			var album = new Album( albums[i], this.colors[i]);
+			var album = new Album( albums[i], this.colors[i], this.colorsHexa[i]);
 			var width = (albums[i].endDate - albums[i].startDate)/secPerPixel ;
 			var left = (albums[i].startDate-dateMin)/secPerPixel;
 			this.injectAlbum(album, left, width);
@@ -153,12 +154,19 @@ var TimeLine = new Class({
 				t.set('morph', {duration: 'long'});
 				t.morph({left: left});
 				var that = this ;
-				(function (picture) {
+				(function (picture, t) {
+//					var myFx = new Fx.Morph(t);
+//					t.addEvent('mouseenter', function () {
+//						myFx.start({"top": 5});
+//					});
+//					t.addEvent('mouseleave', function () {
+//						myFx.start({"border-width": 2});
+//					});
 					t.addEvent('click', function (e) {
 						e.stop();
 						that.fireEvent('displayPicture', picture);
 					});
-				})(picture);
+				})(picture, t);
 				albumToDisplay.picturesDom.push(t);
 			}
 		}

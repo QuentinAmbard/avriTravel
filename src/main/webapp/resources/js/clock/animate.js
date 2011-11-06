@@ -44,13 +44,13 @@
 				
 	
 	function retroClock(m,d,y){
-		console.log(m+","+d+","+y);
+		//console.log(m+","+d+","+y);
 		 h = m;
 		 m1 = Math.floor(d / 10);
 		 m2 = d % 10;
 		 s1 = Math.floor((y / 10)) % 10;
 		 s2 = y % 10;
-		console.log(h+","+m1+"|"+m2+","+s1+"|"+s2);
+		//console.log(h+","+m1+"|"+m2+","+s1+"|"+s2);
 			
 		 ap = "PM";
 		 

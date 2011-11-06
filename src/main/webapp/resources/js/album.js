@@ -6,10 +6,11 @@ var Album = new Class({
 	picturesDom: [],
 	left: 0,
 	color:"",
-	initialize: function(obj, color, options){
+	initialize: function(obj, color, colorHexa, options){
 		for(var i in obj) {
 			this[i] = obj[i];
 		}
+		this.colorHexa = colorHexa;
 		this.color = color;
 		this.text = new Element('div', {'class': 'album', html: this.title, styles: {"border-bottom-color": color}});
 		this.vBar = new Element('div', {'class': 'albumV', styles: {"border-right-color": color}});
