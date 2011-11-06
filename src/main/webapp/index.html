@@ -109,11 +109,12 @@
 	      $('start3d').addEvent("submit", function () {return false;});
 // 	      $('video').set('html', '<strong>Sorry, your browser doesn\'t support WebGL. A 2D version is planned. Meanwhile, you can watch AvriGeo in action :</strong><br /> <iframe width="300" height="182" src="http://www.youtube.com/embed/g0i80Mwob2U" frameborder="0" allowfullscreen></iframe>');
   } 
-
+  var timeLine;
   
    window.addEvent('domready', function() {
 	    if(Detector.webgl){
-	  	   
+	    	timeLine = new TimeLine();
+	    	timeLine.init(data);
 	    	TWEEN.start();
  	    	var geoTravel = new GeoTravel('container');
  	    	GB.geoTravel = geoTravel;
@@ -135,8 +136,6 @@
 	    			}
 	    		}).send();
 	    	});
-	    	var timeLine = new TimeLine();
-	    	timeLine.init(data);
 	    }
     });
    

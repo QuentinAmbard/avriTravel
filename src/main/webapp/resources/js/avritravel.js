@@ -100,17 +100,17 @@ var GeoTravel = new Class({
 		this.scene.addObject(GB.geoUtils.getLine([new THREE.Vector3( 0,0,0 ),new THREE.Vector3( 0,0,300 )], 0x8888FF));
 		//// TESTTTTTTTTTT
 		
-		var locs = [40.71435, 	-74.00597,48.85661, 	2.35222,-33.87365, 	151.20689,-37.81319, 	144.96298,-14.23500, 	-51.92528,-43.53205, 	172.63623];
-		
+//		var locs = [40.71435, 	-74.00597,48.85661, 	2.35222,-33.87365, 	151.20689,-37.81319, 	144.96298,-14.23500, 	-51.92528,-43.53205, 	172.63623];
+//		
 		this.photoHelper = new PhotoHelper(this);
-		var that=this;
-		for(var i=0; i< locs.length;i+=2){
-			(function(a, b, i){
-			setTimeout(function(){
-				that.photoHelper.displayNextPhoto(a, b, '#');
-			}, 4000*i);
-			})(locs[i], 	locs[i+1], i);
-		}
+//		var that=this;
+//		for(var i=0; i< locs.length;i+=2){
+//			(function(a, b, i){
+//			setTimeout(function(){
+//				that.photoHelper.displayNextPhoto(a, b, '#');
+//			}, 4000*i);
+//			})(locs[i], 	locs[i+1], i);
+//		}
 		
 //		var that = this;
 //		setTimeout(function(){that.photoHelper.photos[1].showPhoto()}, 3000);
@@ -266,16 +266,18 @@ var GeoTravel = new Class({
 				z : 0
 			};
 
-		for ( var j = 0; j < this.photoHelper.photos.length; j++) {
-			var photo = this.photoHelper.photos[j];
-//			v = new THREE.Vector3(-deg.y * 2 + photo.lat * 2, deg.x * 2 + 90 * 2 - photo.lng * 2, 0);
-//			var quaternion = new THREE.Quaternion();
-//			quaternion.setFromEuler(v);
-//			photo.pictureObject3d.quaternion = quaternion;
-			v = new THREE.Vector3(-deg.y * 2 , deg.x * 2, 0);
-			var quaternion = new THREE.Quaternion();
-			quaternion.setFromEuler(v);
-			photo.photoObject3d.quaternion = quaternion;
+		if( this.photoHelper != null ) {
+			for ( var j = 0; j < this.photoHelper.photos.length; j++) {
+				var photo = this.photoHelper.photos[j];
+	//			v = new THREE.Vector3(-deg.y * 2 + photo.lat * 2, deg.x * 2 + 90 * 2 - photo.lng * 2, 0);
+	//			var quaternion = new THREE.Quaternion();
+	//			quaternion.setFromEuler(v);
+	//			photo.pictureObject3d.quaternion = quaternion;
+				v = new THREE.Vector3(-deg.y * 2 , deg.x * 2, 0);
+				var quaternion = new THREE.Quaternion();
+				quaternion.setFromEuler(v);
+				photo.photoObject3d.quaternion = quaternion;
+			}
 		}
 
 		this.renderer.clear();
