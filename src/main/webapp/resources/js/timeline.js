@@ -36,7 +36,7 @@ var TimeLine = new Class({
 
 		for(var i =0;i<albums.length;i++) {
 			var album = new Album( albums[i], this.colors[i], this.colorsHexa[i]);
-			var width = (albums[i].endDate - albums[i].startDate)/secPerPixel ;
+			var width = Math.max(50,(albums[i].endDate - albums[i].startDate)/secPerPixel) ;
 			var left = (albums[i].startDate-dateMin)/secPerPixel;
 			this.injectAlbum(album, left, width);
 		}

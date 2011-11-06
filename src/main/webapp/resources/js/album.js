@@ -13,6 +13,7 @@ var Album = new Class({
 		this.colorHexa = colorHexa;
 		this.color = color;
 		this.text = new Element('div', {'class': 'album', html: this.title, styles: {"border-bottom-color": color}});
+		this.date = new Element('div', {'class': 'albumDate', html: this.startDate, styles: {"border-bottom-color": color}});
 		this.vBar = new Element('div', {'class': 'albumV', styles: {"border-right-color": color}});
 		this.point = new Element('div', {'class': 'albumPoint', styles: {"background-color": color}});
 		picture = this.pictures[0];
