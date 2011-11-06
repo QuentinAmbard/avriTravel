@@ -2,6 +2,8 @@ package org.avricot.geoviadeo.web.controller.picasa;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -100,6 +102,17 @@ public class PicasaController {
 					}
 				}
 				if (photoList.size() != 0) {
+					Collections.sort(photoList, new Comparator<Photo>() {
+
+						@Override
+						public int compare(Photo arg0, Photo arg1) {
+							if (arg0.getTimestamp() > arg1.getTimestamp()) {
+								return 1;
+							} else {
+								return -1;
+							}
+						}
+					});
 					album.setPhotosNumber(photoList.size());
 					album.setPhotos(photoList);
 					album.setStartDate(firstPhoto.getTime());
